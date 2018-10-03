@@ -1,0 +1,1 @@
+&emsp;&emsp;一个基于tess4j的OCR例子，直接导入eclipse即可，是之前下载别人的。
