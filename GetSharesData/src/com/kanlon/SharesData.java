@@ -15,6 +15,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 /**
  * 得到股票数据的类 <a>https://www.cnblogs.com/seacryfly/articles/stock.html<a>接口内容
@@ -23,6 +28,35 @@ import java.util.Map;
  * @date 2018年11月6日
  */
 public class SharesData {
+
+	public static Logger logger = Logger.getLogger(SharesData.class.getName());
+	/**
+	 * 项目类文件目录，相当于/WEB-INF/classes/之下的目录(window下，前面会多一个斜线，要去除前面一个斜线，linux下则不会，不知道什么原因)
+	 */
+	public final static String projectPath = SharesData.class.getClassLoader().getResource("").getPath();
+
+	static {
+		try {
+			// 设置在控制台输出
+			logger.setUseParentHandlers(true);
+			// 设置日志输出等级
+			logger.setLevel(Level.INFO);
+			FileHandler fileHandler = null;
+			fileHandler = new FileHandler(
+					projectPath + "/logs/" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".log");
+			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			fileHandler.setFormatter(new Formatter() {
+				@Override
+				public String format(LogRecord arg0) {
+					return String.format("%-8s", arg0.getLevel().getLocalizedName())
+							+ sdf.format(new Date(arg0.getMillis())) + "  : " + arg0.getMessage() + "\n";
+				}
+			});
+			logger.addHandler(fileHandler);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private final static BigInteger ONE = new BigInteger("1");
 
@@ -152,26 +186,25 @@ public class SharesData {
 	 * @param filePath
 	 *            要存放指数数据的文件
 	 */
-	public static void getShangzhengSharesData(String url, String filePath) {
+	public static void getShangzhengSharesData(String url, String filePath, Map<String, BigInteger> map) {
 		String contentType = "text/html;charset=utf-8";
 		String params = "";
 		String encoding = "GBK";
 		StringBuilder build = new StringBuilder();
-		BigInteger integer = new BigInteger("0");
 		String title = "序号,时间毫秒数,股票指数值,浮动幅度,浮动幅度百分比" + System.lineSeparator();
-		System.out.print(title);
+		logger.log(Level.INFO, title);
 		try {
 			writeToFile(title, filePath);
 		} catch (IOException e1) {
-			e1.printStackTrace();
-			throw new RuntimeException("输出标题错误！！！");
+			logger.log(Level.SEVERE, CustomerExceptionTool.getException(e1));
 		}
-		try {
-			while (true) {
+		while (true) {
+			try {
+
 				if (isTradingTime()) {
 					for (int i = 0; i < 10; i++) {
 						Thread.sleep(1000 * 10);
-						integer = integer.add(ONE);
+						map.put(url, map.get(url).add(ONE));
 						String[] results = getGeneralUrl(url, contentType, params, encoding).split(",");
 						// 股票指数值
 						String data = results[1];
@@ -179,20 +212,20 @@ public class SharesData {
 						String range = results[2];
 						// 浮动幅度百分比
 						String rangePercent = results[3];
-						build.append(integer.toString() + "," + new Date() + "," + data + "," + range + ","
+						build.append(map.get(url).toString() + "," + new Date() + "," + data + "," + range + ","
 								+ rangePercent + System.lineSeparator());
 					}
 					writeToFile(build.toString(), filePath);
-					System.out.println(build.toString());
+					logger.log(Level.INFO, build.toString());
 					// 输出到文件后重置
 					build = new StringBuilder();
 				} else {
 					// 如果不是交易时间，则睡眠一分钟
 					Thread.sleep(1000 * 60);
 				}
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "获取上证指数数据错误！！！\r\n" + CustomerExceptionTool.getException(e));
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -204,27 +237,26 @@ public class SharesData {
 	 * @param filePath
 	 *            要存放指数数据的文件
 	 */
-	public static void getOtherSharesData(String url, String filePath) {
+	public static void getOtherSharesData(String url, String filePath, Map<String, BigInteger> map) {
 		String contentType = "text/html;charset=utf-8";
 		String params = "";
 		String encoding = "GBK";
 		StringBuilder build = new StringBuilder();
-		BigInteger integer = new BigInteger("0");
 
 		String title = "序号,时间毫秒数,今日开盘价,昨日收盘价,当前价格,今日最高价,今日最低价" + System.lineSeparator();
 		System.out.print(title);
 		try {
 			writeToFile(title, filePath);
 		} catch (IOException e1) {
-			e1.printStackTrace();
-			throw new RuntimeException("输出标题错误！！！");
+			logger.log(Level.SEVERE, CustomerExceptionTool.getException(e1));
 		}
-		try {
-			while (true) {
+		while (true) {
+			try {
+
 				if (isTradingTime()) {
 					for (int i = 0; i < 10; i++) {
 						Thread.sleep(1000 * 10);
-						integer = integer.add(ONE);
+						map.put(url, map.get(url).add(ONE));
 						String[] results = getGeneralUrl(url, contentType, params, encoding).split(",");
 						// 今日开盘价
 						String openPrice = results[1];
@@ -236,11 +268,12 @@ public class SharesData {
 						String maxPrice = results[4];
 						// 今日最低价
 						String minPrice = results[5];
-						build.append(integer.toString() + "," + new Date() + "," + openPrice + "," + yesterdayClosePrice
-								+ "," + currentPrice + "," + maxPrice + "," + minPrice + System.lineSeparator());
+						build.append(map.get(url).toString() + "," + new Date() + "," + openPrice + ","
+								+ yesterdayClosePrice + "," + currentPrice + "," + maxPrice + "," + minPrice
+								+ System.lineSeparator());
 					}
 					writeToFile(build.toString(), filePath);
-					System.out.println(build.toString());
+					logger.log(Level.INFO, build.toString());
 					// 输出到文件后重置
 					build = new StringBuilder();
 
@@ -248,9 +281,10 @@ public class SharesData {
 					// 如果不是交易时间，则睡眠一分钟
 					Thread.sleep(1000 * 60);
 				}
+
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "获取各股数据错误！！！\r\n" + CustomerExceptionTool.getException(e));
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -267,11 +301,11 @@ public class SharesData {
 						: (cal.get(Calendar.MONTH) + 1))
 				+ ((cal.get(Calendar.DATE) <= 9) ? "0" + cal.get(Calendar.DATE) : cal.get(Calendar.DATE));
 		String dateURL = "http://api.goseek.cn/Tools/holiday?date=" + date;
-		String isWorkDateStr;
+		String isWorkDateStr = "";
 		try {
 			isWorkDateStr = getGeneralUrl(dateURL, "", "", "UTF-8");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "获取交易时间错误！！！" + CustomerExceptionTool.getException(e));
 			throw new RuntimeException("获取交易时间错误！！！");
 		}
 		int flagDay = Integer.parseInt(isWorkDateStr.substring(isWorkDateStr.length() - 2, isWorkDateStr.length() - 1));
@@ -282,10 +316,12 @@ public class SharesData {
 
 		// 判断是否在9：30-12:00,13:00-15:00
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-		Date now = cal.getTime();
+
 		try {
+			Date now = df.parse(df.format(cal.getTime()));
 			// 测试的时间
 			// now = df.parse("9:40");
+
 			if (now.after(df.parse("9:30")) && now.before(df.parse("12:00"))
 					|| (now.after(df.parse("13:00")) && now.before(df.parse("15:00")))) {
 				return true;
