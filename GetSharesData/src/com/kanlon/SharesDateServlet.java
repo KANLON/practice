@@ -20,13 +20,13 @@ public class SharesDateServlet extends HttpServlet {
 	// 上证股票指数
 	String shangzhengURL = "http://hq.sinajs.cn/list=s_sh000001";
 	// 存放上证股票指数的txt文件
-	String shangzhengFilePath = "shangzheng.txt";
+	String shangzhengFilePath = Constant.WEB_APP_ROOT + "/shangzheng.txt";
 	// 拓日新能
 	String tuoriURL = "http://hq.sinajs.cn/list=sz002218";
-	String tuoriFilePath = "tuori.txt";
+	String tuoriFilePath = Constant.WEB_APP_ROOT + "tuori.txt";
 	// 大秦铁路
 	String daqingURL = "http://hq.sinajs.cn/list=sh601006";
-	String daqingFilePath = "daqing.txt";
+	String daqingFilePath = Constant.WEB_APP_ROOT + "daqing.txt";
 
 	@Override
 	public void init() throws ServletException {
@@ -50,10 +50,13 @@ public class SharesDateServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html;charset=utf-8");
+		System.out.println("项目根目录1" + System.getProperty("root").replace("\\", "/"));
+		System.out.println("项目根目录1" + getServletContext().getRealPath("/"));
 
+		resp.setContentType("text/html;charset=utf-8");
 		// 设置逻辑实现
 		PrintWriter out = resp.getWriter();
+
 		out.println("上证指数&nbsp;&nbsp;&nbsp;&nbsp;拓日新能<br/>");
 		out.flush();
 		while (true) {
@@ -61,6 +64,13 @@ public class SharesDateServlet extends HttpServlet {
 			htmlMsg.append(map.get(shangzhengURL) + "&nbsp;&nbsp;&nbsp;&nbsp;" + map.get(tuoriURL) + "<br/>");
 			out.println(htmlMsg.toString());
 			out.flush();
+			// 如果不是交易时间则中断输出
+			if (!SharesData.isTradingTime()) {
+				out.println("现在不是不交易时间！！！<br/>");
+				out.flush();
+				out.close();
+				break;
+			}
 			try {
 				Thread.sleep(1000 * 10);
 			} catch (InterruptedException e) {

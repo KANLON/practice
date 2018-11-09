@@ -30,10 +30,6 @@ import java.util.logging.Logger;
 public class SharesData {
 
 	public static Logger logger = Logger.getLogger(SharesData.class.getName());
-	/**
-	 * 项目类文件目录，相当于/WEB-INF/classes/之下的目录(window下，前面会多一个斜线，要去除前面一个斜线，linux下则不会，不知道什么原因)
-	 */
-	public final static String projectPath = SharesData.class.getClassLoader().getResource("").getPath();
 
 	static {
 		try {
@@ -42,8 +38,8 @@ public class SharesData {
 			// 设置日志输出等级
 			logger.setLevel(Level.INFO);
 			FileHandler fileHandler = null;
-			fileHandler = new FileHandler(
-					projectPath + "/logs/" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".log");
+			fileHandler = new FileHandler(Constant.WEB_APP_ROOT + "/logs/"
+					+ new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".log");
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			fileHandler.setFormatter(new Formatter() {
 				@Override
@@ -172,6 +168,7 @@ public class SharesData {
 	 */
 	public static void writeToFile(String contentStr, String filePath) throws IOException {
 		File file = new File(filePath);
+		logger.info(file.getAbsolutePath());
 		FileWriter writer = new FileWriter(file, true);
 		writer.write(contentStr);
 		writer.flush();
