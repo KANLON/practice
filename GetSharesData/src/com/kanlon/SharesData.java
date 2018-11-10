@@ -38,7 +38,7 @@ public class SharesData {
 			// 设置日志输出等级
 			logger.setLevel(Level.INFO);
 			FileHandler fileHandler = null;
-			fileHandler = new FileHandler(Constant.WEB_APP_ROOT + "/logs/"
+			fileHandler = new FileHandler(Constant.CLASS_PATH + "/logs/"
 					+ new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".log");
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			fileHandler.setFormatter(new Formatter() {
@@ -309,6 +309,8 @@ public class SharesData {
 
 		if (flagDay != 0) {
 			return false;
+			// 测试
+			// return true;
 		}
 
 		// 判断是否在9：30-12:00,13:00-15:00
