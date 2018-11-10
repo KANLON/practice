@@ -3,8 +3,8 @@ package com.kanlon;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ public class SharesDateServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 7142804512583167572L;
 	// 存放各个股票的序号
-	private Map<String, BigInteger> map = new HashMap<>();
+	private Map<String, BigInteger> map = new ConcurrentHashMap<>(5);
 	// 上证股票指数
 	String shangzhengURL = "http://hq.sinajs.cn/list=s_sh000001";
 	// 存放上证股票指数的txt文件
@@ -50,8 +50,6 @@ public class SharesDateServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("项目根目录1" + System.getProperty("root").replace("\\", "/"));
-		System.out.println("项目根目录1" + getServletContext().getRealPath("/"));
 
 		resp.setContentType("text/html;charset=utf-8");
 		// 设置逻辑实现
