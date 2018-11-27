@@ -12,3 +12,7 @@
 ### 练习4 Spring boot 框架搭建邮件发送的项目
 [spring-boot-mail-practice](https://github.com/kanlon/practice/tree/master/spring-boot-mail-practice)
 <br/>
+### 练习5 将批量将GBK编码文件转化为UTF-8的文件的小练习
+[modify-file](https://github.com/kanlon/practice/tree/master/modify-file)
+<br/>
+
