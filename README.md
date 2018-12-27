@@ -15,4 +15,6 @@
 ### 练习5 将批量将GBK编码文件转化为UTF-8的文件的小练习
 [modify-file](https://github.com/kanlon/practice/tree/master/modify-file)
 <br/>
+### 练习6 PhP语言将word转为html文件
+[change-word-to-html](https://github.com/kanlon/practice/tree/master/change-word-to-html)
 
