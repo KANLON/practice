@@ -2,7 +2,7 @@
 
 使用步骤：<br/>
 
-1.修改本目录下的table_info.properties中定义的三个目录文件，分别是表1，表2和比较的结果文件。<br/>
+1.修改compareTwoTable_release1.1目录下的table_info.properties中定义的三个目录文件，分别是表1，表2和比较的结果文件。<br/>
 2.然后点击“点击这个运行.bat”运行，就可以了，<br/>
 <br/>
 
