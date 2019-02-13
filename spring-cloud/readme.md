@@ -8,6 +8,12 @@
 
 [eureka-producer-consumer](/spring-cloud/eureka-producer-consumer)
 
+### 三、 spring-cloud-hystrix（熔断器使用示例）
+
+[spring-cloud-hystrix](/spring-cloud/spring-cloud-hystrix)
+
+
+
 
 
 
