@@ -2,7 +2,7 @@
 
 ### 一、 spring cloud Netflix eureka （服务注册和查找中心）
 
-[eureka-demo](/eureka-demo)
+[eureka-demo](/spring-cloud/eureka-demo)
 
 
 
