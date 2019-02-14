@@ -34,5 +34,5 @@
 
 ### 练习8 spring boot的自动注解，@Enable*,自己定制
 
-(spring-boot-enable)[/spring-boot-enable]
+[spring-boot-enable](/spring-boot-enable)
 
