@@ -31,3 +31,8 @@
 ### 练习7 spring cloud 学习项目
 
 [spring-cloud](/spring-cloud)
+
+### 练习8 spring boot的自动注解，@Enable*,自己定制
+
+(spring-boot-enable)[spring-boot-enable]
+
