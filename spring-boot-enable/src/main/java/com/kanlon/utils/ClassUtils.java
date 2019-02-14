@@ -17,25 +17,11 @@ import java.util.jar.JarFile;
  * @author zhangcanlong
  * @since 2019/2/14
  **/
-@Component
+@Component(value="classUtils")
 public class ClassUtils {
-	public static void main(String[] args) throws Exception {
-		String packageName = "com.kanlon";
-		Set<String> classNames = getClassName(packageName, true);
-		if (classNames != null) {
-			for (String className : classNames) {
-				System.out.println(className);
-			}
-		}
-	}
-	public String hello(){
-		System.out.println("ClassUtils hello");
-		return "ClassUtils hello";
-	}
-
 	private static final String FILE_STR= "file";
 	private static final String JAR_STR = "jar";
-
+	public String test(){return "ClassUtils hello";}
 	/**
 	 * 获取某包下所有类
 	 * @param packageName 包名
@@ -46,7 +32,6 @@ public class ClassUtils {
 		Set<String> classNames = null;
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		String packagePath = packageName.replace(".", "/");
-
 		URL url = loader.getResource(packagePath);
 		if (url != null) {
 			String protocol = url.getProtocol();
@@ -59,7 +44,6 @@ public class ClassUtils {
 				} catch(Exception e){
 					e.printStackTrace();
 				}
-				
 				if(jarFile != null){
 					getClassNameFromJar(jarFile.entries(), packageName, isRecursion);
 				}
@@ -68,7 +52,6 @@ public class ClassUtils {
 			/*从所有的jar包中查找包名*/
 			classNames = getClassNameFromJars(((URLClassLoader)loader).getURLs(), packageName, isRecursion);
 		}
-		
 		return classNames;
 	}
 
@@ -95,10 +78,8 @@ public class ClassUtils {
 				}
 			}
 		}
-
 		return className;
 	}
-
 
 	private static Set<String> getClassNameFromJar(Enumeration<JarEntry> jarEntries, String packageName, boolean isRecursion){
 		Set<String> classNames = new HashSet<>();
@@ -106,10 +87,6 @@ public class ClassUtils {
 		while (jarEntries.hasMoreElements()) {
 			JarEntry jarEntry = jarEntries.nextElement();
 			if(!jarEntry.isDirectory()){
-				/*
-	             * 这里是为了方便，先把"/" 转成 "." 再判断 ".class" 的做法可能会有bug
-	             * (FIXME: 先把"/" 转成 "." 再判断 ".class" 的做法可能会有bug)
-	             */
 				String entryName = jarEntry.getName().replace("/", ".");
 				if (entryName.endsWith(".class") && !entryName.contains("$") && entryName.startsWith(packageName)) {
 					entryName = entryName.replace(".class", "");
@@ -121,7 +98,6 @@ public class ClassUtils {
 				}
 			}
 		}
-
 		return classNames;
 	}
 
@@ -134,27 +110,22 @@ public class ClassUtils {
 	 */
 	private static Set<String> getClassNameFromJars(URL[] urls, String packageName, boolean isRecursion) {
 		Set<String> classNames = new HashSet<>();
-
 		for (URL url : urls) {
 			String classPath = url.getPath();
-
 			//不必搜索classes文件夹
 			if (classPath.endsWith("classes/")) {
 				continue;
 			}
-
 			JarFile jarFile = null;
 			try {
 				jarFile = new JarFile(classPath.substring(classPath.indexOf("/")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			if (jarFile != null) {
 				classNames.addAll(getClassNameFromJar(jarFile.entries(), packageName, isRecursion));
 			}
 		}
-
 		return classNames;
 	}
 }
