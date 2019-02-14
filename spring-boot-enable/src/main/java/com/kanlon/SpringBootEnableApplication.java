@@ -13,28 +13,24 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableSelfBean(packages = "com.kanlon.entity")
+@EnableSelfBean(packages = {"com.kanlon.entity", "com.kanlon.utils"})
 public class SpringBootEnableApplication {
-
     @Autowired
     Role abc;
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context =  SpringApplication.run(SpringBootEnableApplication.class, args);
-        System.out.println(context.getBean(Role.class));
-        //System.out.println(context.getBean(ClassUtils.class));
-        System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
+        ConfigurableApplicationContext context = SpringApplication.run(SpringBootEnableApplication.class, args);
+        //打印出所有spring中注册的bean
+        System.out.println("当前spring注册的bean类");
         String[] allBeans = context.getBeanDefinitionNames();
-        for(String bean:allBeans){
+        for (String bean : allBeans) {
             System.out.println(bean);
         }
-        Role role = context.getBean(Role.class);
-        System.out.println(role.test());
-
+        System.out.println("已注册Role：" + context.getBean(Role.class));
         SpringBootEnableApplication application = context.getBean(SpringBootEnableApplication.class);
-        System.out.println(application.abc.test());
+        System.out.println("Role的测试方法：" + application.abc.test());
 
+        System.out.println(context.getBean(ClassUtils.class).test());
     }
-
 }
 

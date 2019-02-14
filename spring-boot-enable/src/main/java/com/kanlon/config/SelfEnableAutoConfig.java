@@ -24,25 +24,26 @@ public class SelfEnableAutoConfig implements ImportSelector {
     public String[] selectImports(AnnotationMetadata annotationMetadata) {
         //获取EnableEcho注解的所有属性的value
         Map<String, Object> attributes = annotationMetadata.getAnnotationAttributes(EnableSelfBean.class.getName());
-        if(attributes==null){return new String[0]; }
-        //获取package属性的value
-        String[] packages = (String[]) attributes.get("packages");
-        if(packages==null || packages.length<=0 || StringUtils.isEmpty(packages[0])){
+        if (attributes == null) {
             return new String[0];
         }
-        logger.info("加载该包所有类到spring容器中的包名为："+ Arrays.toString(packages));
+        //获取package属性的value
+        String[] packages = (String[]) attributes.get("packages");
+        if (packages == null || packages.length <= 0 || StringUtils.isEmpty(packages[0])) {
+            return new String[0];
+        }
+        logger.info("加载该包所有类到spring容器中的包名为：" + Arrays.toString(packages));
         Set<String> classNames = new HashSet<>();
 
-        for(String packageName:packages){
-            classNames.addAll(ClassUtils.getClassName(packageName,true));
+        for (String packageName : packages) {
+            classNames.addAll(ClassUtils.getClassName(packageName, true));
         }
         //将类打印到日志中
-        for(String className:classNames){
-            logger.info(className+"加载到spring容器中");
+        for (String className : classNames) {
+            logger.info(className + "加载到spring容器中");
         }
         String[] returnClassNames = new String[classNames.size()];
-        returnClassNames= classNames.toArray(returnClassNames);
-
-        return  returnClassNames;
+        returnClassNames = classNames.toArray(returnClassNames);
+        return returnClassNames;
     }
 }
