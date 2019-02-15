@@ -12,6 +12,9 @@
 
 [spring-cloud-hystrix](/spring-cloud/spring-cloud-hystrix)
 
+### 四、 hystrix-dashboard-turbine（熔断监控Hystrix Dashboard和Turbine的示例）
+
+[hystrix-dashboard-turbine](/spring-cloud/hystrix-dashboard-turbine)
 
 
 
