@@ -17,7 +17,6 @@ import javax.annotation.Resource;
  **/
 @RestController
 public class ConsumerController {
-
     /**
      * 由于 FeignClient隐性注入，所以使用@Resource通过byName注入更能精确查找。参考：https://www.cnblogs.com/think-in-java/p/5474740.html
      **/
