@@ -7,8 +7,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/KANLON/practice/
-          search-paths: spring-cloud/spring-cloud-config-git/config-repo
+          uri: https://github.com/KANLON/spring-cloud-config
+          search-paths: config-repo
           username:
           password:
 
