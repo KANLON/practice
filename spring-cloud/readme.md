@@ -16,7 +16,9 @@
 
 [hystrix-dashboard-turbine](/spring-cloud/hystrix-dashboard-turbine)
 
+### 五、配置中心，spring-cloud-config
 
+[spring-cloud-config-git](/spring-cloud/spring-cloud-config-git)
 
 
 
