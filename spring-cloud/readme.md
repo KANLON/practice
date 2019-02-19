@@ -30,3 +30,9 @@
 [spring-cloud-zuul](/spring-cloud/spring-cloud-zuul)
 
 
+### 八、spring cloud zuul服务网关高级，核心过滤器，路由熔断，路由重试，高可用
+
+[spring-cloud-zuul-advanced](/spring-cloud/spring-cloud-zuul-advanced)
+
+
+
