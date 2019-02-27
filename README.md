@@ -44,3 +44,8 @@
 
 [spring-security-angular](/spring-security-angular)
 
+### 练习11 oauth2练习例子
+
+[oauth2-demo-doban-qq-login](/oauth2-demo-doban-qq-login)
+
+

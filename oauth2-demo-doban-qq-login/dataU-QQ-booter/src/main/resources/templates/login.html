@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test For DataU</title>
+    <script type="text/javascript" src="/js/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <script>
+
+        /**
+         * get root path, like "http://192.168.11.91", without a "/" in the end
+         */
+        //var path = getRootPath();
+        var path = "http://localhost";
+        function getRootPath() {
+            var strFullPath = window.document.location.href;
+            var strPath = window.document.location.pathname;
+            var pos = strFullPath.indexOf(strPath);
+            var prePath = strFullPath.substring(0, pos);
+            var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+            return (prePath + postPath);
+        }
+
+        /**
+         * 用户访问客户端，后者将前者导向认证服务器，即跳转到登录页面
+         */
+        function leadToAuthorize() {
+            $.ajax({
+                type: "POST",
+                url: path + ":7001/leadToAuthorize",
+                dataType: "text",
+                success: function (msg) {
+                    //$("#msg").html(msg);
+                }
+            });
+        }
+
+        function login() {
+            window.location.href=path + ":7000/login?username="+document.getElementById("username").value+"&password="+document.getElementById("password").value;
+        }
+
+    </script>
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+<h1>qq登录页面</h1>
+
+    <div class="phone">
+        <div>
+            用户<input id="username" type="text" name="username" value="admin"><br>
+            密码<input id="password" type="text" name="password" value="admin"><br>
+            <br>
+            <button value="授权登陆" onclick="login()">授权登陆</button>
+        注册 忘记密码
+        </div>
+    </div>
+
+</body>
+</html>
