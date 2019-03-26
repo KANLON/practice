@@ -38,8 +38,12 @@ public class SharesData {
 			// 设置日志输出等级
 			logger.setLevel(Level.INFO);
 			FileHandler fileHandler = null;
-			fileHandler = new FileHandler(Constant.CLASS_PATH + "/logs/"
-					+ new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".log");
+			String filePath = Constant.CLASS_PATH + "/logs/"
+					+ new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".log";
+			if(!new File(filePath).exists()){
+				new File(filePath).createNewFile();
+			}
+			fileHandler = new FileHandler(filePath);
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			fileHandler.setFormatter(new Formatter() {
 				@Override
@@ -106,8 +110,6 @@ public class SharesData {
 			buffer.append(getLine);
 		}
 		in.close();
-		// System.out.println("(url的响应)result:" + buffer);
-
 		return buffer.toString();
 	}
 
