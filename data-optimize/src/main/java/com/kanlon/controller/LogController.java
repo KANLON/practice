@@ -76,7 +76,7 @@ public class LogController {
      * @return 数据集合
      **/
     @GetMapping("/thread")
-    public HttpEntity<List<LogPO>> getDataMethod4(@Valid LogRequest request){
+    public HttpEntity<List<LogPO>> getDataMethod4(@Valid LogRequest request) throws InterruptedException {
         List<LogPO> list = logService.getData4(request);
         for(LogPO po:list){
             po.add(linkTo(methodOn(LogController.class).getDataMethod4(request)).withSelfRel());

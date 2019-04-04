@@ -3,14 +3,18 @@ package com.kanlon.service;
 import com.kanlon.mapper.LogMapper;
 import com.kanlon.model.LogPO;
 import com.kanlon.model.LogRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 日志业务逻辑层
@@ -44,7 +48,7 @@ public class LogService {
         return logMapper.getLogsByCondition2(request);
     }
     /**
-     * 使用方法一，in得到数据
+     * 使用方法三，union all得到数据
      * @param request 条件实体类
      * @return 日志数据集合
      **/
@@ -53,26 +57,61 @@ public class LogService {
         return logMapper.getLogsByCondition3(request);
     }
     /**
-     * 使用方法一，in得到数据
+     * 使用方法四，多线程得到数据,
      * @param request 条件实体类
      * @return 日志数据集合
      **/
-    public List<LogPO> getData4(LogRequest request){
+    public List<LogPO> getData4(LogRequest request) throws InterruptedException {
         this.commonSetDt(request);
-        return logMapper.getLogsByCondition4(request);
+        CountDownLatch latch = new CountDownLatch(4);
+        //设置新的条件
+        LogRequest[] requests = new LogRequest[4];
+        for(int i=0;i<requests.length;i++){
+            requests[i] = new LogRequest();
+            BeanUtils.copyProperties(request,requests[i]);
+        }
+        requests[1].setDt(getDateStr(request.getDt(),2));
+        requests[2].setDt(getDateStr(request.getDt(),4));
+        requests[3].setDt(getDateStr(request.getDt(),6));
+        //异步执行
+        LogPO[] logPOS = new LogPO[4];
+        List<LogPO> list = new ArrayList<>(4);
+        logPOS[0] = this.execMapper(request,latch);
+        logPOS[1] = this.execMapper(requests[1],latch);
+        logPOS[2] = this.execMapper(requests[2],latch);
+        logPOS[3] = this.execMapper(requests[3],latch);
+        //等待5秒还没执行完，直接返回
+        latch.await(5, TimeUnit.SECONDS);
+        for(LogPO logPO:logPOS){
+            if(logPO!=null){
+                list.add(logPO);
+            }
+        }
+        return list;
     }
 
     /**
      * 将日期设置好
      * @param request 需要设置的实体类
-     * @return void
      **/
     private void commonSetDt(LogRequest request){
         request.setDt2(this.getDateStr(request.getDt(),2));
         request.setDt4(this.getDateStr(request.getDt(),4));
         request.setDt6(this.getDateStr(request.getDt(),6));
+
     }
 
+    /**
+     * 异步执行mapper
+     * @param request 条件
+     * @return 执行返回的实体类
+     **/
+    @Async
+    protected LogPO execMapper(LogRequest request, CountDownLatch latch){
+        LogPO logPO = this.logMapper.getLogsByCondition4(request);
+        latch.countDown();
+        return logPO;
+    }
 
     /**
      * 获得(DATE_FORMAT)日期字符串

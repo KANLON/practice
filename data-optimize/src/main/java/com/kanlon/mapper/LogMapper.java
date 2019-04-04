@@ -50,7 +50,7 @@ public interface LogMapper {
      * @param condition 条件实体类
      * @return 集合
      **/
-    @Select("select * from " +TABLE_NAME+" d where d.htmlname=#{htmlname} and  d.logurl=#{logurl} and d.dt=#{dt}")
-    List<LogPO> getLogsByCondition4(LogRequest condition);
+    @Select("select * from " +TABLE_NAME+" d where d.htmlname=#{htmlname} and  d.logurl=#{logurl} and d.dt=#{dt} limit 1")
+    LogPO getLogsByCondition4(LogRequest condition);
 
 }
