@@ -7,13 +7,13 @@
 
 1. `docker container ls` 或者 `docker ps`  列出运行的容器
 
-2. docker container stop 暂停容器（widow系统下使用，linux下使用ctrl+c退出容器，就是暂停了）
+2. `docker container stop` 暂停容器（widow系统下使用，linux下使用ctrl+c退出容器，就是暂停了）
 
-3. docker run -d -p 4000:80 friendlyhello  以后台形式运行docker，-d  表示以后台形式   ， -p表示端口对应，  friendlyhello表示容器名
+3. `docker run -d -p 4000:80 friendlyhello`  以后台形式运行docker，-d  表示以后台形式   ， -p表示端口对应，  friendlyhello表示容器名
 
 4. 上传镜像步骤：
 
-   4.0 docker login 登陆公共仓库，之后输入用户和密码再进行登陆。如果要登陆私有仓库，则`docker login hostname`之后输入用户名或密码，或者`docker login -u 【用户名】 -p 【密码】 hostname`
+   4.0 `docker login` 登陆公共仓库，之后输入用户和密码再进行登陆。如果要登陆私有仓库，则`docker login hostname`之后输入用户名或密码，或者`docker login -u 【用户名】 -p 【密码】 hostname`
 
    4.1 `docker tag images username/repository:tag`      【上传到中央仓库docker hub】images为你本地的镜像名，username为自己命名的仓库名，repository:tag为新的镜像名和对应标签。如果要上传到自己的私有仓库，需要这样命名：`docker tag images hostname/repository:tag`。hostname为对应私有仓库地址。
    
@@ -34,6 +34,7 @@
 
 #### Part 2: Containers
 
+```
 docker build -t friendlyhello .  # Create image using this directory's Dockerfile
 docker run -p 4000:80 friendlyhello  # Run "friendlyname" mapping port 4000 to 80
 docker run -d -p 4000:80 friendlyhello         # Same thing, but in detached mode
@@ -51,8 +52,13 @@ docker tag <image> username/repository:tag  # Tag <image> for upload to registry
 docker push username/repository:tag            # Upload tagged image to registry
 docker run username/repository:tag                   # Run image from a registry
 
+```
 
-#### Part 3: services 一个stack是一个分享依赖、相互协作的相关服务的集合。一个stack就足以定义和协调整个APP的功能。
+#### Part 3: services 
+
+一个stack是一个分享依赖、相互协作的相关服务的集合。一个stack就足以定义和协调整个APP的功能。
+
+```
 docker stack ls                                            # List stacks or apps 列举栈服务或app服务
 docker stack deploy -c <composefile> <appname>  # Run the specified Compose file 部署运行
 docker service ls                 # List running services associated with an app
@@ -61,7 +67,7 @@ docker inspect <task or container>                   # Inspect task or container
 docker container ls -q                                      # List container IDs
 docker stack rm <appname>                             # Tear down an application
 docker swarm leave --force      # Take down a single node swarm from the manager
-
+```
 
 ##### docker注意事项
 
