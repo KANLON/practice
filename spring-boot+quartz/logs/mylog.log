@@ -1,0 +1,802 @@
+2019-04-09 11:19:23.984  INFO 15992 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 15992 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 11:19:23.986  INFO 15992 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 11:19:24.401  WARN 15992 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 11:19:24.932  INFO 15992 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 11:19:24.951  INFO 15992 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 11:19:24.952  INFO 15992 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 11:19:25.056  INFO 15992 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 11:19:25.056  INFO 15992 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1038 ms
+2019-04-09 11:19:25.230  INFO 15992 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 11:19:25.429  INFO 15992 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 11:19:25.431  WARN 15992 --- [main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-04-09 11:19:26.600 ERROR 15992 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+java.sql.SQLException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:73) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:76) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:112) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:118) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:428) [HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:499) [HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:112) [HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:97) [HikariCP-java7-2.4.13.jar:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:157) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:323) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.jdbc.EmbeddedDatabaseConnection.isEmbedded(EmbeddedDatabaseConnection.java:123) [spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.jdbc.AbstractDataSourceInitializer.isEnabled(AbstractDataSourceInitializer.java:74) [spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.jdbc.AbstractDataSourceInitializer.initialize(AbstractDataSourceInitializer.java:54) [spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:363) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:307) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:136) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:414) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:849) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at com.kanlon.SpringBootQuartzDemoApplication.main(SpringBootQuartzDemoApplication.java:10) ~[classes/:na]
+Caused by: com.mysql.cj.exceptions.InvalidConnectionAttributeException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:1.8.0_201]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[na:1.8.0_201]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:85) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.util.TimeUtil.getCanonicalTimezone(TimeUtil.java:132) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.protocol.a.NativeProtocol.configureTimezone(NativeProtocol.java:2241) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.protocol.a.NativeProtocol.initServerSession(NativeProtocol.java:2265) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.ConnectionImpl.initializePropsFromServer(ConnectionImpl.java:1319) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:966) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-java-8.0.15.jar:8.0.15]
+	... 43 common frames omitted
+
+2019-04-09 11:19:26.628  INFO 15992 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 11:19:26.636  INFO 15992 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 11:19:26.636  INFO 15992 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 11:19:26.637  INFO 15992 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2019-04-09 11:19:26.637  INFO 15992 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2019-04-09 11:19:26.637  INFO 15992 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 11:19:26.637  INFO 15992 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 11:19:26.638  INFO 15992 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2a1debfa
+2019-04-09 11:19:26.670  INFO 15992 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 11:19:26.671  INFO 15992 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 11:19:26.696  INFO 15992 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 11:19:26.698  INFO 15992 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 3.045 seconds (JVM running for 3.96)
+2019-04-09 11:20:51.251  INFO 14476 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 14476 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 11:20:51.254  INFO 14476 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 11:20:52.113  WARN 14476 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 11:20:53.061  INFO 14476 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 11:20:53.098  INFO 14476 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 11:20:53.098  INFO 14476 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 11:20:53.281  INFO 14476 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 11:20:53.281  INFO 14476 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1957 ms
+2019-04-09 11:20:53.872  INFO 14476 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 11:20:54.346  INFO 14476 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 11:20:54.518  INFO 14476 --- [main] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (com.mysql.jdbc.JDBC4Connection.getNetworkTimeout()I)
+2019-04-09 11:20:54.525  INFO 14476 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 11:20:54.692  INFO 14476 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 11:20:54.718  INFO 14476 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 11:20:54.719  INFO 14476 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 11:20:54.719  INFO 14476 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2019-04-09 11:20:54.721  INFO 14476 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2019-04-09 11:20:54.721  INFO 14476 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 11:20:54.721  INFO 14476 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 11:20:54.721  INFO 14476 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@482b6acc
+2019-04-09 11:20:54.790  INFO 14476 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 11:20:54.791  INFO 14476 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 11:20:54.842  INFO 14476 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 11:20:54.848  INFO 14476 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 4.618 seconds (JVM running for 10.069)
+2019-04-09 15:34:29.535  INFO 14692 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 14692 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 15:34:29.540  INFO 14692 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 15:34:30.470  WARN 14692 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 15:34:31.597  INFO 14692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 15:34:31.636  INFO 14692 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 15:34:31.636  INFO 14692 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 15:34:31.812  INFO 14692 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 15:34:31.813  INFO 14692 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2180 ms
+2019-04-09 15:34:32.046  INFO 14692 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 15:34:35.349 ERROR 14692 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: Connection is broken: "java.net.ConnectException: Connection refused: connect: localhost" [90067-199]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:617) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:427) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.message.DbException.get(DbException.java:194) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.engine.SessionRemote.connectServer(SessionRemote.java:435) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:317) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:169) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:148) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.Driver.connect(Driver.java:69) ~[h2-1.4.199.jar:1.4.199]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:112) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:118) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:193) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:428) [HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:499) [HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:112) [HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:97) [HikariCP-java7-2.4.13.jar:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:157) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:115) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:78) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:323) [spring-jdbc-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.jdbc.EmbeddedDatabaseConnection.isEmbedded(EmbeddedDatabaseConnection.java:123) [spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.jdbc.AbstractDataSourceInitializer.isEnabled(AbstractDataSourceInitializer.java:74) [spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.jdbc.AbstractDataSourceInitializer.initialize(AbstractDataSourceInitializer.java:54) [spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.__invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45009) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45012) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:363) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:307) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:136) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:414) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:307) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:452) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:526) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:496) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$ResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:636) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:180) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:321) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1411) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) [spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:849) ~[spring-beans-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:549) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248) ~[spring-boot-2.1.4.RELEASE.jar:2.1.4.RELEASE]
+	at com.kanlon.SpringBootQuartzDemoApplication.main(SpringBootQuartzDemoApplication.java:14) ~[classes/:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method) ~[na:1.8.0_201]
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85) ~[na:1.8.0_201]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[na:1.8.0_201]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[na:1.8.0_201]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[na:1.8.0_201]
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172) ~[na:1.8.0_201]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:1.8.0_201]
+	at java.net.Socket.connect(Socket.java:589) ~[na:1.8.0_201]
+	at org.h2.util.NetUtils.createSocket(NetUtils.java:103) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.util.NetUtils.createSocket(NetUtils.java:83) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.engine.SessionRemote.initTransfer(SessionRemote.java:115) ~[h2-1.4.199.jar:1.4.199]
+	at org.h2.engine.SessionRemote.connectServer(SessionRemote.java:431) ~[h2-1.4.199.jar:1.4.199]
+	... 64 common frames omitted
+
+2019-04-09 15:34:35.393  INFO 14692 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 15:34:35.408  INFO 14692 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 15:34:35.408  INFO 14692 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 15:34:35.409  INFO 14692 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2019-04-09 15:34:35.410  INFO 14692 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'scheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2019-04-09 15:34:35.410  INFO 14692 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'scheduler' initialized from an externally provided properties instance.
+2019-04-09 15:34:35.411  INFO 14692 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 15:34:35.413  INFO 14692 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@6785786d
+2019-04-09 15:34:35.678  INFO 14692 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 15:34:36.011  INFO 14692 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2019-04-09 15:34:36.065  INFO 14692 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Will start Quartz Scheduler [scheduler] in 1 seconds
+2019-04-09 15:34:36.079 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:34:36.116  INFO 14692 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 15:34:36.121  INFO 14692 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 7.595 seconds (JVM running for 13.255)
+2019-04-09 15:34:37.067  INFO 14692 --- [Quartz Scheduler [scheduler]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 1 seconds
+2019-04-09 15:34:37.067  INFO 14692 --- [Quartz Scheduler [scheduler]] org.quartz.core.QuartzScheduler          : Scheduler scheduler_$_NON_CLUSTERED started.
+2019-04-09 15:34:41.082 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:34:46.076 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:34:51.076 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:34:56.079 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:35:01.076 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:35:06.076 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:35:11.077 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:35:16.076 ERROR 14692 --- [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task.
+
+java.lang.RuntimeException: CronExpression '' is invalid.
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:111) ~[quartz-2.3.1.jar:na]
+	at com.kanlon.common.ScheduleRefreshDatabase.scheduleUpdateCronTrigger(ScheduleRefreshDatabase.java:45) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor61.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:45005) ~[na:1.8.0_201]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_201]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_201]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [na:1.8.0_201]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_201]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_201]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_201]
+Caused by: java.text.ParseException: Unexpected end of expression.
+	at org.quartz.CronExpression.buildExpression(CronExpression.java:494) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronExpression.<init>(CronExpression.java:276) ~[quartz-2.3.1.jar:na]
+	at org.quartz.CronScheduleBuilder.cronSchedule(CronScheduleBuilder.java:107) ~[quartz-2.3.1.jar:na]
+	... 13 common frames omitted
+
+2019-04-09 15:35:30.623  INFO 13232 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 13232 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 15:35:30.627  INFO 13232 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 15:35:31.389  WARN 13232 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 15:35:32.314  INFO 13232 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 15:35:32.344  INFO 13232 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 15:35:32.344  INFO 13232 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 15:35:32.500  INFO 13232 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 15:35:32.500  INFO 13232 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1796 ms
+2019-04-09 15:35:32.582  WARN 13232 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'scheduleRefreshDatabase': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jobDetail' available
+2019-04-09 15:35:32.589  INFO 13232 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-04-09 15:35:32.618  INFO 13232 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-04-09 15:35:32.686 ERROR 13232 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'jobDetail' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'jobDetail' in your configuration.
+
+2019-04-09 15:36:05.882  INFO 12816 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 12816 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 15:36:05.886  INFO 12816 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 15:36:06.679  WARN 12816 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 15:36:07.906  INFO 12816 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 15:36:07.937  INFO 12816 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 15:36:07.938  INFO 12816 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 15:36:08.096  INFO 12816 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 15:36:08.096  INFO 12816 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2136 ms
+2019-04-09 15:36:08.182  WARN 12816 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'scheduleRefreshDatabase': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named 'jobDetail' available
+2019-04-09 15:36:08.189  INFO 12816 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-04-09 15:36:08.216  INFO 12816 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-04-09 15:36:08.284 ERROR 12816 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean named 'jobDetail' that could not be found.
+
+
+Action:
+
+Consider defining a bean named 'jobDetail' in your configuration.
+
+2019-04-09 15:37:44.831  INFO 10596 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 10596 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 15:37:44.839  INFO 10596 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 15:37:45.839  WARN 10596 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 15:37:46.874  INFO 10596 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 15:37:46.907  INFO 10596 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 15:37:46.908  INFO 10596 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 15:37:47.075  INFO 10596 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 15:37:47.075  INFO 10596 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2123 ms
+2019-04-09 15:37:47.493  INFO 10596 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 15:37:48.148  INFO 10596 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 15:37:48.441  INFO 10596 --- [main] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (com.mysql.jdbc.JDBC4Connection.getNetworkTimeout()I)
+2019-04-09 15:37:48.458  INFO 10596 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 15:37:48.527  INFO 10596 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 15:37:48.542  INFO 10596 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 15:37:48.542  INFO 10596 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 15:37:48.543  INFO 10596 --- [main] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2019-04-09 15:37:48.544  INFO 10596 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2019-04-09 15:37:48.544  INFO 10596 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 15:37:48.544  INFO 10596 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 15:37:48.544  INFO 10596 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@1b5d1d9
+2019-04-09 15:37:48.623  INFO 10596 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 15:37:48.624  INFO 10596 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 15:37:48.682  INFO 10596 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 15:37:48.687  INFO 10596 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 4.719 seconds (JVM running for 11.407)
+2019-04-09 15:41:01.288  WARN 10596 --- [rebel-change-detector-thread] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 15:58:34.502  INFO 13604 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 13604 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 15:58:34.506  INFO 13604 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 15:58:35.093  WARN 13604 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 15:58:35.253  WARN 13604 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 15:58:36.157  INFO 13604 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 15:58:36.188  INFO 13604 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 15:58:36.189  INFO 13604 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 15:58:36.342  INFO 13604 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 15:58:36.342  INFO 13604 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1756 ms
+2019-04-09 15:58:36.884  INFO 13604 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 15:58:37.263  INFO 13604 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 15:58:37.420  INFO 13604 --- [main] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (com.mysql.jdbc.JDBC4Connection.getNetworkTimeout()I)
+2019-04-09 15:58:37.428  INFO 13604 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 15:58:37.527  INFO 13604 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 15:58:37.541  INFO 13604 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 15:58:37.541  INFO 13604 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 15:58:37.557  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Using db table-based data access locking (synchronization).
+2019-04-09 15:58:37.561  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : JobStoreCMT initialized.
+2019-04-09 15:58:37.562  INFO 13604 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2019-04-09 15:58:37.563  INFO 13604 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 15:58:37.563  INFO 13604 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 15:58:37.563  INFO 13604 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@79a92277
+2019-04-09 15:58:38.099  INFO 13604 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 15:58:38.109  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Freed 0 triggers from 'acquired' / 'blocked' state.
+2019-04-09 15:58:38.116  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2019-04-09 15:58:38.116  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovery complete.
+2019-04-09 15:58:38.117  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 'complete' triggers.
+2019-04-09 15:58:38.118  INFO 13604 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 stale fired job entries.
+2019-04-09 15:58:38.119  INFO 13604 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 15:58:38.143 ERROR 13604 --- [quartzScheduler_QuartzSchedulerThread] org.quartz.core.ErrorLogger              : An error occurred while scanning for the next triggers to fire.
+
+org.quartz.JobPersistenceException: Couldn't acquire next trigger: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OPTION SQL_SELECT_LIMIT=1' at line 1
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.acquireNextTrigger(JobStoreSupport.java:2923) ~[quartz-2.3.1.jar:na]
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport$41.execute(JobStoreSupport.java:2805) ~[quartz-2.3.1.jar:na]
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport$41.execute(JobStoreSupport.java:2803) ~[quartz-2.3.1.jar:na]
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.executeInNonManagedTXLock(JobStoreSupport.java:3864) ~[quartz-2.3.1.jar:na]
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.acquireNextTriggers(JobStoreSupport.java:2802) ~[quartz-2.3.1.jar:na]
+	at org.quartz.core.QuartzSchedulerThread.run(QuartzSchedulerThread.java:287) ~[quartz-2.3.1.jar:na]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OPTION SQL_SELECT_LIMIT=1' at line 1
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.8.0_201]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingConstructorAccessorImpl.__newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45009) ~[na:1.8.0_201]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45012) ~[na:1.8.0_201]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[na:1.8.0_201]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:406) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:381) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1030) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:956) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3491) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3423) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:1936) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2060) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2536) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.StatementImpl.executeSimpleNonQuery(StatementImpl.java:1463) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeQuery(PreparedStatement.java:1872) ~[mysql-connector-java-5.1.6.jar:na]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) ~[HikariCP-java7-2.4.13.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeQuery(HikariProxyPreparedStatement.java) ~[HikariCP-java7-2.4.13.jar:na]
+	at org.quartz.impl.jdbcjobstore.StdJDBCDelegate.selectTriggerToAcquire(StdJDBCDelegate.java:2613) ~[quartz-2.3.1.jar:na]
+	at org.quartz.impl.jdbcjobstore.JobStoreSupport.acquireNextTrigger(JobStoreSupport.java:2844) ~[quartz-2.3.1.jar:na]
+	... 5 common frames omitted
+
+2019-04-09 15:58:38.177  INFO 13604 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 15:58:38.181  INFO 13604 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 4.476 seconds (JVM running for 9.691)
+2019-04-09 15:59:38.122  INFO 13604 --- [QuartzScheduler_quartzScheduler-NON_CLUSTERED_MisfireHandler] o.s.s.quartz.LocalDataSourceJobStore     : Handling 1 trigger(s) that missed their scheduled fire-time.
+2019-04-09 16:01:30.334  INFO 14632 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 14632 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 16:01:30.338  INFO 14632 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 16:01:30.926  WARN 14632 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 16:01:31.098  WARN 14632 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 16:01:32.057  INFO 14632 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 16:01:32.094  INFO 14632 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 16:01:32.095  INFO 14632 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 16:01:32.262  INFO 14632 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 16:01:32.262  INFO 14632 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1845 ms
+2019-04-09 16:01:32.799  INFO 14632 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 16:01:33.197  INFO 14632 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 16:01:33.570  INFO 14632 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 16:01:33.663  INFO 14632 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 16:01:33.678  INFO 14632 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 16:01:33.678  INFO 14632 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 16:01:33.684  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Using db table-based data access locking (synchronization).
+2019-04-09 16:01:33.686  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : JobStoreCMT initialized.
+2019-04-09 16:01:33.687  INFO 14632 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2019-04-09 16:01:33.687  INFO 14632 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 16:01:33.687  INFO 14632 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 16:01:33.688  INFO 14632 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@2540ad71
+2019-04-09 16:01:33.839  INFO 14632 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 16:01:33.843  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Freed 0 triggers from 'acquired' / 'blocked' state.
+2019-04-09 16:01:33.845  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Handling 2 trigger(s) that missed their scheduled fire-time.
+2019-04-09 16:01:33.862  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2019-04-09 16:01:33.862  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovery complete.
+2019-04-09 16:01:33.863  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 'complete' triggers.
+2019-04-09 16:01:33.863  INFO 14632 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 stale fired job entries.
+2019-04-09 16:01:33.950  INFO 14632 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 16:01:33.999  INFO 14632 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 16:01:34.005  INFO 14632 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 4.292 seconds (JVM running for 9.72)
+2019-04-09 16:07:53.908  INFO 332 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 332 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 16:07:53.914  INFO 332 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 16:07:54.682  WARN 332 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 16:07:54.844  WARN 332 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 16:07:55.818  INFO 332 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 16:07:55.848  INFO 332 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 16:07:55.849  INFO 332 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 16:07:56.004  INFO 332 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 16:07:56.005  INFO 332 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1978 ms
+2019-04-09 16:07:56.535  INFO 332 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 16:07:56.926  INFO 332 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 16:07:57.098  INFO 332 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 16:07:57.187  INFO 332 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 16:07:57.202  INFO 332 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 16:07:57.202  INFO 332 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 16:07:57.208  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Using db table-based data access locking (synchronization).
+2019-04-09 16:07:57.211  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : JobStoreCMT initialized.
+2019-04-09 16:07:57.212  INFO 332 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2019-04-09 16:07:57.212  INFO 332 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 16:07:57.212  INFO 332 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 16:07:57.212  INFO 332 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@6fe337a5
+2019-04-09 16:07:57.527  INFO 332 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 16:07:57.530  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Freed 0 triggers from 'acquired' / 'blocked' state.
+2019-04-09 16:07:57.532  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2019-04-09 16:07:57.533  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovery complete.
+2019-04-09 16:07:57.534  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 'complete' triggers.
+2019-04-09 16:07:57.535  INFO 332 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 stale fired job entries.
+2019-04-09 16:07:57.536  INFO 332 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 16:07:57.590  INFO 332 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 16:07:57.596  INFO 332 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 4.664 seconds (JVM running for 11.834)
+2019-04-09 18:13:54.398  INFO 14864 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 14864 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 18:13:54.403  INFO 14864 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 18:13:55.363  WARN 14864 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 18:13:55.787  WARN 14864 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 18:13:57.438  INFO 14864 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 18:13:57.503  INFO 14864 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 18:13:57.503  INFO 14864 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 18:13:57.775  INFO 14864 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 18:13:57.775  INFO 14864 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3256 ms
+2019-04-09 18:13:58.368  INFO 14864 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 18:13:58.865  INFO 14864 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 18:13:59.185  INFO 14864 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 18:13:59.431  INFO 14864 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 18:13:59.457  INFO 14864 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 18:13:59.457  INFO 14864 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 18:13:59.463  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Using db table-based data access locking (synchronization).
+2019-04-09 18:13:59.467  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : JobStoreCMT initialized.
+2019-04-09 18:13:59.468  INFO 14864 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2019-04-09 18:13:59.468  INFO 14864 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 18:13:59.468  INFO 14864 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 18:13:59.468  INFO 14864 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@39157c2d
+2019-04-09 18:13:59.578  INFO 14864 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 18:13:59.581  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Freed 1 triggers from 'acquired' / 'blocked' state.
+2019-04-09 18:13:59.583  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Handling 2 trigger(s) that missed their scheduled fire-time.
+2019-04-09 18:13:59.605  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2019-04-09 18:13:59.605  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovery complete.
+2019-04-09 18:13:59.605  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 'complete' triggers.
+2019-04-09 18:13:59.606  INFO 14864 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 1 stale fired job entries.
+2019-04-09 18:13:59.694  INFO 14864 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 18:13:59.787  INFO 14864 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 18:13:59.792  INFO 14864 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 7.273 seconds (JVM running for 13.175)
+2019-04-09 18:16:22.551  INFO 14316 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 14316 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 18:16:22.556  INFO 14316 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 18:16:23.370  WARN 14316 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 18:16:23.727  WARN 14316 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 18:16:24.972  INFO 14316 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 18:16:25.037  INFO 14316 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 18:16:25.038  INFO 14316 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 18:16:25.302  INFO 14316 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 18:16:25.302  INFO 14316 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2650 ms
+2019-04-09 18:16:25.902  INFO 14316 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 18:16:26.421  INFO 14316 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 18:16:26.757  INFO 14316 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 18:16:27.032  INFO 14316 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 18:16:27.060  INFO 14316 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 18:16:27.060  INFO 14316 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 18:16:27.066  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Using db table-based data access locking (synchronization).
+2019-04-09 18:16:27.070  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : JobStoreCMT initialized.
+2019-04-09 18:16:27.071  INFO 14316 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2019-04-09 18:16:27.071  INFO 14316 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 18:16:27.071  INFO 14316 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 18:16:27.071  INFO 14316 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@4387e107
+2019-04-09 18:16:27.134  INFO 14316 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 18:16:27.184  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Freed 1 triggers from 'acquired' / 'blocked' state.
+2019-04-09 18:16:27.186  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Handling 2 trigger(s) that missed their scheduled fire-time.
+2019-04-09 18:16:27.382  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2019-04-09 18:16:27.383  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovery complete.
+2019-04-09 18:16:27.383  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 'complete' triggers.
+2019-04-09 18:16:27.384  INFO 14316 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 1 stale fired job entries.
+2019-04-09 18:16:27.420  INFO 14316 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 18:16:27.493  INFO 14316 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 18:16:27.499  INFO 14316 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 6.216 seconds (JVM running for 12.041)
+2019-04-09 18:27:03.021  INFO 4876 --- [main] c.k.SpringBootQuartzDemoApplication      : Starting SpringBootQuartzDemoApplication on JZ3945 with PID 4876 (I:\practice\spring-boot+quartz\target\classes started by Administrator in I:\practice\spring-boot+quartz)
+2019-04-09 18:27:03.025  INFO 4876 --- [main] c.k.SpringBootQuartzDemoApplication      : No active profile set, falling back to default profiles: default
+2019-04-09 18:27:03.880  WARN 4876 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon.mapper]' package. Please check your configuration.
+2019-04-09 18:27:04.230  WARN 4876 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.kanlon]' package. Please check your configuration.
+2019-04-09 18:27:05.523  INFO 4876 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2019-04-09 18:27:05.590  INFO 4876 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-09 18:27:05.590  INFO 4876 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2019-04-09 18:27:05.853  INFO 4876 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-09 18:27:05.853  INFO 4876 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2732 ms
+2019-04-09 18:27:06.423  INFO 4876 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-04-09 18:27:06.936  INFO 4876 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-09 18:27:07.253  INFO 4876 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-09 18:27:07.510  INFO 4876 --- [main] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2019-04-09 18:27:07.539  INFO 4876 --- [main] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-04-09 18:27:07.539  INFO 4876 --- [main] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.1 created.
+2019-04-09 18:27:07.547  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Using db table-based data access locking (synchronization).
+2019-04-09 18:27:07.551  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : JobStoreCMT initialized.
+2019-04-09 18:27:07.552  INFO 4876 --- [main] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.1) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is not clustered.
+
+2019-04-09 18:27:07.553  INFO 4876 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2019-04-09 18:27:07.553  INFO 4876 --- [main] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.1
+2019-04-09 18:27:07.553  INFO 4876 --- [main] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@574cc3d3
+2019-04-09 18:27:07.608  INFO 4876 --- [main] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2019-04-09 18:27:07.656  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Freed 1 triggers from 'acquired' / 'blocked' state.
+2019-04-09 18:27:07.658  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Handling 2 trigger(s) that missed their scheduled fire-time.
+2019-04-09 18:27:07.703  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovering 0 jobs that were in-progress at the time of the last shut-down.
+2019-04-09 18:27:07.703  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Recovery complete.
+2019-04-09 18:27:07.704  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 0 'complete' triggers.
+2019-04-09 18:27:07.704  INFO 4876 --- [main] o.s.s.quartz.LocalDataSourceJobStore     : Removed 1 stale fired job entries.
+2019-04-09 18:27:07.733  INFO 4876 --- [main] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2019-04-09 18:27:07.804  INFO 4876 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2019-04-09 18:27:07.811  INFO 4876 --- [main] c.k.SpringBootQuartzDemoApplication      : Started SpringBootQuartzDemoApplication in 6.086 seconds (JVM running for 11.527)
