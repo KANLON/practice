@@ -13,6 +13,23 @@ DROP TABLE IF EXISTS qrtz_triggers;
 DROP TABLE IF EXISTS qrtz_job_details;
 DROP TABLE IF EXISTS qrtz_calendars;
 
+USE test;
+/*创建自定义的任务表*/
+DROP TABLE IF EXISTS tb_app_quartz;
+CREATE TABLE tb_app_quartz
+(
+  quartz_id INT(11) PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+  job_name varchar(100) not null comment '任务名称',
+  job_group varchar(100) not null default 'default' comment '任务分组',
+  start_time varchar(20) not null default now() comment '任务开始时间',
+  cron_expression varchar(20) not null comment 'corn表格式',
+  invoke_param varchar(255) not null comment '需要传递的参数',
+  -- 由于不能同时创建两个default timestamp默认值所以将创建时间的默认值修改为'1991-01-01 00:00:00'
+  ctime TIMESTAMP NOT NULL DEFAULT '1991-01-01 00:00:00' COMMENT '创建时间',
+  mtime TIMESTAMP NOT NULL DEFAULT NOW() COMMENT '修改时间',
+  dr TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否有效,标记删除'
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='自定义的任务表';
+
 
 CREATE TABLE qrtz_job_details
   (

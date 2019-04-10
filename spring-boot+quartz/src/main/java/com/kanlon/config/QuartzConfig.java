@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @Author sgl
  * @Date 2018-06-26 16:45
  */
-@Configuration
+//@Configuration
 public class QuartzConfig {
 
 //    @Bean
