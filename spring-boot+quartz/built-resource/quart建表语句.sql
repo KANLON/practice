@@ -177,3 +177,13 @@ CREATE TABLE qrtz_locks
 
 
 COMMIT;
+
+
+--
+-- 插入数据
+INSERT INTO tb_app_quartz(job_name,job_group,start_time,cron_expression,invoke_param)
+VALUES('job_name1',"default_group1","2019-04-10 12:12:12","* 1/2 * * * * ","abc");
+
+UPDATE tb_app_quartz
+ SET job_name='job_name1',job_group='default_group1',start_time='2019-04-10 12:12:12',cron_expression='* 1/2 * * * * ',invoke_param='abc'
+WHERE quartz_id=

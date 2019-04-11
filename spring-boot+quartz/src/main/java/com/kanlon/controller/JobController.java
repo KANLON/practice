@@ -4,25 +4,35 @@ import com.kanlon.model.AppQuartz;
 import com.kanlon.model.ReturnMsg;
 import com.kanlon.service.AppQuartzService;
 import com.kanlon.service.JobUtil;
+import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * job的controller
  * @author zhangcanlong
  * @since 2019-04-10
  **/
+@RequestMapping("/")
 @RestController
 public class JobController {
     @Autowired
     private JobUtil jobUtil;
     @Autowired
     private AppQuartzService appQuartzService;
+
+    @Autowired
+    private SchedulerFactoryBean schedulerFactoryBean;
+
     
     private Logger logger = LoggerFactory.getLogger(JobController.class);
 
@@ -131,6 +141,107 @@ public class JobController {
         return new ReturnMsg("200","success repauseAll");
     }
 
+    /**
+     * 获取所有任务
+     * @return com.kanlon.model.ReturnMsg
+     **/
+    @GetMapping("/tasks")
+    public ReturnMsg getAllTask() throws SchedulerException {
+        List<String> allJobNames = new ArrayList<>();
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        for(String groupName:scheduler.getJobGroupNames()){
+            for(JobKey jobKey: scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))){
+                String jobName = jobKey.getName();
+                String jobGroup = jobKey.getGroup();
+                allJobNames.add(jobName+"-"+jobGroup);
+                //get job trigger
+                List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
+                Date nextFireTime = triggers.get(0).getNextFireTime();
+                System.out.println("[jobName] : " + jobName + " [groupName] : "
+                        + jobGroup + " - " + nextFireTime);
+            }
+        }
+
+        List<ScheduleJob>  list = getAllJob();
+
+        System.out.println(list);
+        return ReturnMsg.successReturn("200",allJobNames);
+    }
+
+
+    /** * 获取所有计划中的任务列表 * * @return * @throws SchedulerException */
+    public List<ScheduleJob> getAllJob() throws SchedulerException {
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
+        Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
+        List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
+        for (JobKey jobKey : jobKeys) {
+            List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+            for (Trigger trigger : triggers) {
+                ScheduleJob job = new ScheduleJob();
+                job.setName(jobKey.getName());
+                job.setGroup(jobKey.getGroup());
+                job.setDescription("触发器:" + trigger.getKey());
+                Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
+                job.setStatus(triggerState.name());
+                if (trigger instanceof CronTrigger) {
+                    CronTrigger cronTrigger = (CronTrigger) trigger;
+                    String cronExpression = cronTrigger.getCronExpression();
+                    job.setCron(cronExpression);
+                }
+                jobList.add(job);
+            }
+        }
+        return jobList;
+    }
 
     
+}
+
+class ScheduleJob{
+    private String name;
+    private String group;
+    private String description;
+    private String cron;
+    private String status;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCron() {
+        return cron;
+    }
+
+    public void setCron(String cron) {
+        this.cron = cron;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

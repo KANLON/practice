@@ -44,17 +44,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- quartz -->
+        <!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.0.4</version>
         </dependency>
-        <dependency><!-- 为了方便测试，此处使用了内存数据库 -->
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
