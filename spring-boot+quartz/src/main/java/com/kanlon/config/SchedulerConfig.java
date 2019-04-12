@@ -16,6 +16,11 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import javax.sql.DataSource;
 import java.io.IOException;
 
+/**
+ * 任务调度的配置类
+ * @author zhangcanlong
+ * @since 2019-04-12
+ **/
 @Configuration
 public class SchedulerConfig implements ApplicationListener<ContextRefreshedEvent> {
 

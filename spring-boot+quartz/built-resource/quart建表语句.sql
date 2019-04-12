@@ -21,7 +21,7 @@ CREATE TABLE tb_app_quartz
   quartz_id INT(11) PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
   job_name varchar(100) not null comment '任务名称',
   job_group varchar(100) not null default 'default' comment '任务分组',
-  start_time varchar(20) not null default now() comment '任务开始时间',
+  start_time DATETIME not null default now() comment '任务开始时间',
   cron_expression varchar(20) not null comment 'corn表格式',
   invoke_param varchar(255) not null comment '需要传递的参数',
   -- 由于不能同时创建两个default timestamp默认值所以将创建时间的默认值修改为'1991-01-01 00:00:00'
@@ -178,12 +178,3 @@ CREATE TABLE qrtz_locks
 
 COMMIT;
 
-
---
--- 插入数据
-INSERT INTO tb_app_quartz(job_name,job_group,start_time,cron_expression,invoke_param)
-VALUES('job_name1',"default_group1","2019-04-10 12:12:12","* 1/2 * * * * ","abc");
-
-UPDATE tb_app_quartz
- SET job_name='job_name1',job_group='default_group1',start_time='2019-04-10 12:12:12',cron_expression='* 1/2 * * * * ',invoke_param='abc'
-WHERE quartz_id=

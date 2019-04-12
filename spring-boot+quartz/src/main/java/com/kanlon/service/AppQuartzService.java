@@ -17,6 +17,14 @@ public class AppQuartzService {
     @Autowired
     private QuartzCronMapper cronMapper;
 
+    /**
+     * 从自己创建的表格中获取所有任务，包含任务id
+     * @return AppQuartz集合
+     **/
+    public List<AppQuartz> getAllTaskFromMyTable(){
+        return cronMapper.selectAllTask();
+    }
+
     public void insertAppQuartzSer(AppQuartz appQuartz) {
         this.cronMapper.insertOne(appQuartz);
     }

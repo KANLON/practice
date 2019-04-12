@@ -1,7 +1,9 @@
 package com.kanlon.controller;
 
 import com.kanlon.model.AppQuartz;
-import com.kanlon.model.ReturnMsg;
+import com.kanlon.model.CommonResponse;
+import com.kanlon.model.ScheduleJob;
+import com.kanlon.request.DeleteJobRequest;
 import com.kanlon.service.AppQuartzService;
 import com.kanlon.service.JobUtil;
 import org.quartz.*;
@@ -9,11 +11,10 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,11 +28,12 @@ import java.util.Set;
 public class JobController {
     @Autowired
     private JobUtil jobUtil;
+
     @Autowired
     private AppQuartzService appQuartzService;
 
     @Autowired
-    private SchedulerFactoryBean schedulerFactoryBean;
+    private Scheduler scheduler;
 
     
     private Logger logger = LoggerFactory.getLogger(JobController.class);
@@ -41,11 +43,11 @@ public class JobController {
      * @param appQuartz 任务信息
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/addJob",method= RequestMethod.POST)
-    public ReturnMsg addjob(@RequestBody AppQuartz appQuartz) throws Exception {
-        appQuartzService.insertAppQuartzSer(appQuartz);        
+    @PostMapping(value="/addJob")
+    public CommonResponse addjob(@RequestBody AppQuartz appQuartz) throws Exception {
         jobUtil.addJob(appQuartz);
-        return new ReturnMsg("200","添加成功");
+        appQuartzService.insertAppQuartzSer(appQuartz);
+        return CommonResponse.succeedResult();
     }
     
     /**
@@ -53,18 +55,14 @@ public class JobController {
      * @param quartzIds id
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/pauseJob",method=RequestMethod.POST)
-    public ReturnMsg pausejob(@RequestBody Integer[]quartzIds) throws Exception {
+    @PostMapping(value="/pauseJob")
+    public CommonResponse pauseJob(@NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
         AppQuartz appQuartz=null;            
-        if(quartzIds.length>0){
             for(Integer quartzId:quartzIds) {
                 appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
                 jobUtil.pauseJob(appQuartz.getJobName(), appQuartz.getJobGroup());                        
             }
-            return new ReturnMsg("200","success pauseJob");    
-        }else {
-            return new ReturnMsg("404","fail pauseJob");    
-        }                                                                
+            return CommonResponse.succeedResult();
     }
     
     /**
@@ -72,52 +70,48 @@ public class JobController {
      * @param quartzIds id
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/resumeJob",method=RequestMethod.POST)
-    public ReturnMsg resumejob(@RequestBody Integer[]quartzIds) throws Exception {    
+    @PostMapping(value="/resumeJob")
+    public CommonResponse resumejob(@NotEmpty @RequestBody Integer[]quartzIds) throws Exception {
         AppQuartz appQuartz=null;
-        if(quartzIds.length>0) {
             for(Integer quartzId:quartzIds) {
                 appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
                 jobUtil.resumeJob(appQuartz.getJobName(), appQuartz.getJobGroup());                
             }
-            return new ReturnMsg("200","success resumeJob");
-        }else {
-            return new ReturnMsg("404","fail resumeJob");
-        }            
-    } 
+            return CommonResponse.succeedResult();
+    }
         
     
     /**
      * 删除job
-     * @param quartzIds id
+     * @param request 请求参数
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/deletJob",method=RequestMethod.POST)
-    public ReturnMsg deletjob(@RequestBody Integer[]quartzIds) throws Exception {
+    @PostMapping(value="/deleteJob")
+    public CommonResponse deleteJob(@RequestBody DeleteJobRequest request) throws Exception {
         AppQuartz appQuartz=null;
-        for(Integer quartzId:quartzIds) {
+        for(Integer quartzId:request.getQuartzIds()) {
             appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
             String ret=jobUtil.deleteJob(appQuartz);
             if("success".equals(ret)) {
                 appQuartzService.deleteAppQuartzByIdSer(quartzId);
             }
         }
-        return new ReturnMsg("200","success deleteJob");    
+        return CommonResponse.succeedResult();
     }
         
     /**
      * 修改
-     * @param appQuartz
+     * @param appQuartz 新的任务信息
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/updateJob",method=RequestMethod.POST)
-    public ReturnMsg  modifyJob(@RequestBody AppQuartz appQuartz) throws Exception {
+    @PostMapping(value="/updateJob")
+    public CommonResponse  modifyJob(@RequestBody AppQuartz appQuartz) throws Exception {
         String ret= jobUtil.modifyJob(appQuartz);            
         if("success".equals(ret)) {            
             appQuartzService.updateAppQuartzSer(appQuartz);
-            return new ReturnMsg("200","success updateJob",ret);
+            return CommonResponse.succeedResult("200",ret);
         }else {
-            return new ReturnMsg("404","fail updateJob",ret);
+            return CommonResponse.failedResult("找不到该任务");
         }                
     }
     
@@ -125,10 +119,10 @@ public class JobController {
      * 暂停所有
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/pauseAll",method=RequestMethod.GET)
-    public ReturnMsg pauseAllJob() throws Exception {
+    @GetMapping(value="/pauseAll")
+    public CommonResponse pauseAllJob() throws Exception {
         jobUtil.pauseAllJob();
-        return new ReturnMsg("200","success pauseAll");
+        return CommonResponse.succeedResult();
     }
     
     /**
@@ -136,9 +130,18 @@ public class JobController {
      * @return com.kanlon.model.ReturnMsg
      **/
     @RequestMapping(value="/repauseAll",method=RequestMethod.GET)
-    public ReturnMsg repauseAllJob() throws Exception {
+    public CommonResponse repauseAllJob() throws Exception {
         jobUtil.resumeAllJob();
-        return new ReturnMsg("200","success repauseAll");
+        return CommonResponse.succeedResult();
+    }
+
+    /**
+     * 从自己的数据库表获取任务，包含任务id
+     * @return com.kanlon.model.CommonResponse
+     **/
+    @GetMapping("/allJobs")
+    public CommonResponse getAllTaskFromMyTable(){
+        return CommonResponse.succeedResult(appQuartzService.getAllTaskFromMyTable());
     }
 
     /**
@@ -146,35 +149,10 @@ public class JobController {
      * @return com.kanlon.model.ReturnMsg
      **/
     @GetMapping("/tasks")
-    public ReturnMsg getAllTask() throws SchedulerException {
-        List<String> allJobNames = new ArrayList<>();
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        for(String groupName:scheduler.getJobGroupNames()){
-            for(JobKey jobKey: scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))){
-                String jobName = jobKey.getName();
-                String jobGroup = jobKey.getGroup();
-                allJobNames.add(jobName+"-"+jobGroup);
-                //get job trigger
-                List<Trigger> triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
-                Date nextFireTime = triggers.get(0).getNextFireTime();
-                System.out.println("[jobName] : " + jobName + " [groupName] : "
-                        + jobGroup + " - " + nextFireTime);
-            }
-        }
-
-        List<ScheduleJob>  list = getAllJob();
-
-        System.out.println(list);
-        return ReturnMsg.successReturn("200",allJobNames);
-    }
-
-
-    /** * 获取所有计划中的任务列表 * * @return * @throws SchedulerException */
-    public List<ScheduleJob> getAllJob() throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+    public CommonResponse getAllTask() throws SchedulerException {
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-        List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
+        List<ScheduleJob> jobList = new ArrayList<>();
         for (JobKey jobKey : jobKeys) {
             List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
             for (Trigger trigger : triggers) {
@@ -192,56 +170,7 @@ public class JobController {
                 jobList.add(job);
             }
         }
-        return jobList;
+        return CommonResponse.succeedResult(jobList);
     }
 
-    
-}
-
-class ScheduleJob{
-    private String name;
-    private String group;
-    private String description;
-    private String cron;
-    private String status;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCron() {
-        return cron;
-    }
-
-    public void setCron(String cron) {
-        this.cron = cron;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

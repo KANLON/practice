@@ -35,12 +35,14 @@ public class JobUtil {
          
              if (!CronExpression.isValidExpression(appQuartz.getCronExpression())) {
                  //表达式格式不正确
-                return "Illegal cron expression";
-            }                            
+                 throw new RuntimeException("非法的cron 表达式");
+            }
             JobDetail jobDetail=null;
             //构建job信息
             if("JobOne".equals(appQuartz.getJobGroup())) {
-                 jobDetail = JobBuilder.newJob(JobOne.class).withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup()).build();
+                 jobDetail = JobBuilder.newJob(JobOne.class)
+                         .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
+                         .build();
             }
             if("JobTwo".equals(appQuartz.getJobGroup())) {
                  jobDetail = JobBuilder.newJob(JobTwo.class).withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup()).build();
@@ -56,9 +58,9 @@ public class JobUtil {
             //传递参数
             if(appQuartz.getInvokeParam()!=null && !"".equals(appQuartz.getInvokeParam())) {
                 trigger.getJobDataMap().put("invokeParam",appQuartz.getInvokeParam());    
-            }                                
+            }
+            //将触发器与任务绑定在一起
             scheduler.scheduleJob(jobDetail, trigger);
-           // pauseJob(appQuartz.getJobName(),appQuartz.getJobGroup());
             return "success";
         } 
          /**
