@@ -1,6 +1,5 @@
 package com.kanlon.task;
 
-import com.kanlon.controller.JobController;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Component;
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
-public class JobOne implements Job {
-    private Logger logger = LoggerFactory.getLogger(JobOne.class);
+public class HttpJob implements Job {
+    private Logger logger = LoggerFactory.getLogger(HttpJob.class);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

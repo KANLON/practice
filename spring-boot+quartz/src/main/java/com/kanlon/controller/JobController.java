@@ -3,7 +3,6 @@ package com.kanlon.controller;
 import com.kanlon.model.AppQuartz;
 import com.kanlon.model.CommonResponse;
 import com.kanlon.model.ScheduleJob;
-import com.kanlon.request.DeleteJobRequest;
 import com.kanlon.service.AppQuartzService;
 import com.kanlon.service.JobUtil;
 import org.quartz.*;
@@ -71,7 +70,7 @@ public class JobController {
      * @return com.kanlon.model.ReturnMsg
      **/
     @PostMapping(value="/resumeJob")
-    public CommonResponse resumejob(@NotEmpty @RequestBody Integer[]quartzIds) throws Exception {
+    public CommonResponse resumejob(@NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
         AppQuartz appQuartz=null;
             for(Integer quartzId:quartzIds) {
                 appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
@@ -83,14 +82,17 @@ public class JobController {
     
     /**
      * 删除job
-     * @param request 请求参数
+     * @param quartzIds 请求参数id
      * @return com.kanlon.model.ReturnMsg
      **/
     @PostMapping(value="/deleteJob")
-    public CommonResponse deleteJob(@RequestBody DeleteJobRequest request) throws Exception {
+    public CommonResponse deleteJob(@RequestBody Integer[]  quartzIds) throws Exception {
         AppQuartz appQuartz=null;
-        for(Integer quartzId:request.getQuartzIds()) {
+        for(Integer quartzId : quartzIds) {
             appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
+            if(appQuartz==null){
+                throw new RuntimeException("该id不存在不能删除");
+            }
             String ret=jobUtil.deleteJob(appQuartz);
             if("success".equals(ret)) {
                 appQuartzService.deleteAppQuartzByIdSer(quartzId);

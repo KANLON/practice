@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
-public class JobTwo implements Job {
-    private Logger logger = LoggerFactory.getLogger(JobOne.class);
+public class ShellJob implements Job {
+    private Logger logger = LoggerFactory.getLogger(ShellJob.class);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

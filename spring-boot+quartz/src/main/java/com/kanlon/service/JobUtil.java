@@ -1,8 +1,8 @@
 package com.kanlon.service;
 
 import com.kanlon.model.AppQuartz;
-import com.kanlon.task.JobOne;
-import com.kanlon.task.JobTwo;
+import com.kanlon.task.HttpJob;
+import com.kanlon.task.ShellJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,12 +40,12 @@ public class JobUtil {
             JobDetail jobDetail=null;
             //构建job信息
             if("JobOne".equals(appQuartz.getJobGroup())) {
-                 jobDetail = JobBuilder.newJob(JobOne.class)
+                 jobDetail = JobBuilder.newJob(HttpJob.class)
                          .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
                          .build();
             }
             if("JobTwo".equals(appQuartz.getJobGroup())) {
-                 jobDetail = JobBuilder.newJob(JobTwo.class).withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup()).build();
+                 jobDetail = JobBuilder.newJob(ShellJob.class).withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup()).build();
             }
                     
             //表达式调度构建器(即任务执行的时间,不立即执行)
