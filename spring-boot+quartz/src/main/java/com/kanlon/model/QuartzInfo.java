@@ -1,23 +1,26 @@
 package com.kanlon.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.kanlon.common.DateTimeFormat;
+
+import java.util.Date;
 
 /**
- * tb_app_quartz表的实体类
+ * 调度任务的信息，连表查询的信息
+ *
  * @author zhangcanlong
- * @since 2019-04-09
+ * @since 2019/4/15 12:46
  **/
-public class AppQuartz {
+public class QuartzInfo {
     /**任务主键*/
     private Integer quartzId;
     /**任务名称*/
     private String jobName;
-    /**任务组名*/
+    /**任务分组*/
     private String jobGroup;
-    /**负责人名称*/
+    /**任务负责人*/
     private String charge;
-    /**负责人部门*/
-    @JsonProperty("chargeDepartment")
+    /**任务负责人部门*/
     private String chargeDepartment;
     /**任务开始时间*/
     private String startTime;
@@ -27,12 +30,14 @@ public class AppQuartz {
     private String invokeParam;
     /**需要传递的参数2*/
     private String invokeParam2;
-    /**描述*/
-    private String description;
-    /**创建时间*/
-    private String ctime;
     /**修改时间*/
     private String mtime;
+    /**描述*/
+    private String description;
+    /**下次执行时间,获取时，将long型时间转化为“yyyy-MM-dd HH:mm:ss”这种形式的字符串*/
+    private String nextFireTime;
+    /**任务状态*/
+    private String triggerState;
 
     public Integer getQuartzId() {
         return quartzId;
@@ -56,22 +61,6 @@ public class AppQuartz {
 
     public void setJobGroup(String jobGroup) {
         this.jobGroup = jobGroup;
-    }
-
-    public String getCharge() {
-        return charge;
-    }
-
-    public void setCharge(String charge) {
-        this.charge = charge;
-    }
-
-    public String getChargeDepartment() {
-        return chargeDepartment;
-    }
-
-    public void setChargeDepartment(String chargeDepartment) {
-        this.chargeDepartment = chargeDepartment;
     }
 
     public String getStartTime() {
@@ -98,6 +87,14 @@ public class AppQuartz {
         this.invokeParam = invokeParam;
     }
 
+    public String getMtime() {
+        return mtime;
+    }
+
+    public void setMtime(String mtime) {
+        this.mtime = mtime;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -106,20 +103,37 @@ public class AppQuartz {
         this.description = description;
     }
 
-    public String getCtime() {
-        return ctime;
+    public String getNextFireTime() {
+        String dateStr = DateTimeFormat.printIOS(new Date(Long.parseLong(this.nextFireTime)));
+        return dateStr;
     }
 
-    public void setCtime(String ctime) {
-        this.ctime = ctime;
+    public void setNextFireTime(String nextFireTime) {
+        this.nextFireTime = nextFireTime;
     }
 
-    public String getMtime() {
-        return mtime;
+    public String getTriggerState() {
+        return triggerState;
     }
 
-    public void setMtime(String mtime) {
-        this.mtime = mtime;
+    public void setTriggerState(String triggerState) {
+        this.triggerState = triggerState;
+    }
+
+    public String getCharge() {
+        return charge;
+    }
+
+    public void setCharge(String charge) {
+        this.charge = charge;
+    }
+
+    public String getChargeDepartment() {
+        return chargeDepartment;
+    }
+
+    public void setChargeDepartment(String chargeDepartment) {
+        this.chargeDepartment = chargeDepartment;
     }
 
     public String getInvokeParam2() {
@@ -132,6 +146,6 @@ public class AppQuartz {
 
     @Override
     public String toString() {
-        return "AppQuartz{" + "quartzId=" + quartzId + ", jobName='" + jobName + '\'' + ", jobGroup='" + jobGroup + '\'' + ", charge='" + charge + '\'' + ", chargeDepartment='" + chargeDepartment + '\'' + ", startTime='" + startTime + '\'' + ", cronExpression='" + cronExpression + '\'' + ", invokeParam='" + invokeParam + '\'' + ", invokeParam2='" + invokeParam2 + '\'' + ", description='" + description + '\'' + ", ctime='" + ctime + '\'' + ", mtime='" + mtime + '\'' + '}';
+        return "QuartzInfo{" + "quartzId=" + quartzId + ", jobName='" + jobName + '\'' + ", jobGroup='" + jobGroup + '\'' + ", charge='" + charge + '\'' + ", chargeDepartment='" + chargeDepartment + '\'' + ", startTime='" + startTime + '\'' + ", cronExpression='" + cronExpression + '\'' + ", invokeParam='" + invokeParam + '\'' + ", invokeParam2='" + invokeParam2 + '\'' + ", mtime='" + mtime + '\'' + ", description='" + description + '\'' + ", nextFireTime='" + nextFireTime + '\'' + ", triggerState='" + triggerState + '\'' + '}';
     }
 }

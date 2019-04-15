@@ -93,4 +93,9 @@ public class CommonResponse {
     public void setMessageData(Map<String, String> messageData) {
         this.messageData = messageData;
     }
+
+    @Override
+    public String toString() {
+        return "CommonResponse{" + "code=" + code + ", message='" + message + '\'' + ", resultData=" + resultData + ", messageData=" + messageData + '}';
+    }
 }

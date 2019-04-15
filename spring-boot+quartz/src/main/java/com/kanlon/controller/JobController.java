@@ -1,30 +1,31 @@
 package com.kanlon.controller;
 
-import com.kanlon.model.AppQuartz;
-import com.kanlon.model.CommonResponse;
-import com.kanlon.model.ScheduleJob;
+import com.kanlon.common.DateTimeFormat;
+import com.kanlon.model.*;
 import com.kanlon.service.AppQuartzService;
 import com.kanlon.service.JobUtil;
+import com.kanlon.service.QuartzResultService;
 import org.quartz.*;
-import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * job的controller
+ *
  * @author zhangcanlong
  * @since 2019-04-10
  **/
 @RequestMapping("/")
 @RestController
 public class JobController {
+
     @Autowired
     private JobUtil jobUtil;
 
@@ -32,147 +33,143 @@ public class JobController {
     private AppQuartzService appQuartzService;
 
     @Autowired
-    private Scheduler scheduler;
+    private QuartzResultService quartzResultService;
 
-    
     private Logger logger = LoggerFactory.getLogger(JobController.class);
+
+
+    /**
+     * 从自己的数据库表获取所有任务，包含任务id
+     *
+     * @return com.kanlon.model.CommonResponse
+     **/
+    @GetMapping("/allJobs")
+    public CommonResponse getAllTaskFromMyTable(PageModel page) {
+        PageDatasModel model = new PageDatasModel(page);
+        model.setDatas(appQuartzService.getAllTaskFromMyTable(page));
+        logger.info("获取全部任务成功");
+        return CommonResponse.succeedResult(model);
+    }
 
     /**
      * 添加一个job
+     *
      * @param appQuartz 任务信息
      * @return com.kanlon.model.ReturnMsg
      **/
-    @PostMapping(value="/addJob")
-    public CommonResponse addjob(@RequestBody AppQuartz appQuartz) throws Exception {
-        jobUtil.addJob(appQuartz);
+    @PostMapping(value = "/addJob")
+    public CommonResponse addJob(@Valid @RequestBody AppQuartz appQuartz) throws Exception {
+        Date date = new Date();
+        appQuartz.setCtime(DateTimeFormat.printIOS(date));
+        appQuartz.setMtime(DateTimeFormat.printIOS(date));
         appQuartzService.insertAppQuartzSer(appQuartz);
         return CommonResponse.succeedResult();
     }
-    
+
+
     /**
-     * 暂停job
-     * @param quartzIds id
-     * @return com.kanlon.model.ReturnMsg
-     **/
-    @PostMapping(value="/pauseJob")
-    public CommonResponse pauseJob(@NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
-        AppQuartz appQuartz=null;            
-            for(Integer quartzId:quartzIds) {
-                appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
-                jobUtil.pauseJob(appQuartz.getJobName(), appQuartz.getJobGroup());                        
-            }
-            return CommonResponse.succeedResult();
-    }
-    
-    /**
-     * 恢复job
-     * @param quartzIds id
-     * @return com.kanlon.model.ReturnMsg
-     **/
-    @PostMapping(value="/resumeJob")
-    public CommonResponse resumejob(@NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
-        AppQuartz appQuartz=null;
-            for(Integer quartzId:quartzIds) {
-                appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
-                jobUtil.resumeJob(appQuartz.getJobName(), appQuartz.getJobGroup());                
-            }
-            return CommonResponse.succeedResult();
-    }
-        
-    
-    /**
-     * 删除job
-     * @param quartzIds 请求参数id
-     * @return com.kanlon.model.ReturnMsg
-     **/
-    @PostMapping(value="/deleteJob")
-    public CommonResponse deleteJob(@RequestBody Integer[]  quartzIds) throws Exception {
-        AppQuartz appQuartz=null;
-        for(Integer quartzId : quartzIds) {
-            appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
-            if(appQuartz==null){
-                throw new RuntimeException("该id不存在不能删除");
-            }
-            String ret=jobUtil.deleteJob(appQuartz);
-            if("success".equals(ret)) {
-                appQuartzService.deleteAppQuartzByIdSer(quartzId);
-            }
-        }
-        return CommonResponse.succeedResult();
-    }
-        
-    /**
-     * 修改
+     * 更新,修改
+     *
      * @param appQuartz 新的任务信息
      * @return com.kanlon.model.ReturnMsg
      **/
-    @PostMapping(value="/updateJob")
-    public CommonResponse  modifyJob(@RequestBody AppQuartz appQuartz) throws Exception {
-        String ret= jobUtil.modifyJob(appQuartz);            
-        if("success".equals(ret)) {            
-            appQuartzService.updateAppQuartzSer(appQuartz);
-            return CommonResponse.succeedResult("200",ret);
-        }else {
-            return CommonResponse.failedResult("找不到该任务");
-        }                
+    @PostMapping(value = "/updateJob")
+    public CommonResponse modifyJob(@Valid @RequestBody AppQuartz appQuartz) throws SchedulerException, ParseException {
+        if(appQuartz.getQuartzId()==null){
+            return CommonResponse.failedResult("更新的任务id不能为null",-1);
+        }
+        appQuartz.setMtime(DateTimeFormat.printIOS(new Date()));
+        appQuartzService.updateAppQuartzSer(appQuartz);
+        return CommonResponse.succeedResult();
     }
-    
+
     /**
-     * 暂停所有
+     * 删除job
+     *
+     * @param quartzIds 请求参数id
      * @return com.kanlon.model.ReturnMsg
      **/
-    @GetMapping(value="/pauseAll")
+    @PostMapping(value = "/deleteJob")
+    public CommonResponse deleteJob(@Valid @NotEmpty @RequestBody Integer[] quartzIds) throws SchedulerException {
+        for (Integer quartzId : quartzIds) {
+            appQuartzService.deleteAppQuartzByIdSer(quartzId);
+        }
+        logger.info("要删除的任务id为："+ Arrays.toString(quartzIds));
+        return CommonResponse.succeedResult();
+    }
+
+    /**
+     * 根据任务id暂停job
+     *
+     * @param quartzIds 任务id
+     * @return com.kanlon.model.ReturnMsg
+     **/
+    @PostMapping(value = "/pauseJob")
+    public CommonResponse pauseJob(@Valid @NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
+        for (Integer quartzId : quartzIds) {
+            AppQuartz appQuartz = appQuartzService.selectAppQuartzByIdSer(quartzId);
+            jobUtil.pauseJob(appQuartz.getJobName(), appQuartz.getJobGroup());
+        }
+        return CommonResponse.succeedResult();
+    }
+
+    /**
+     * 根据id恢复job
+     * @param quartzIds 任务id
+     * @return com.kanlon.model.ReturnMsg
+     **/
+    @PostMapping(value = "/resumeJob")
+    public CommonResponse resumeJob(@Valid @NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
+        for (Integer quartzId : quartzIds) {
+            AppQuartz appQuartz = appQuartzService.selectAppQuartzByIdSer(quartzId);
+            jobUtil.resumeJob(appQuartz.getJobName(), appQuartz.getJobGroup());
+        }
+        return CommonResponse.succeedResult();
+    }
+
+    /**
+     * 暂停所有
+     *
+     * @return com.kanlon.model.ReturnMsg
+     **/
+    @GetMapping(value = "/pauseAll")
     public CommonResponse pauseAllJob() throws Exception {
         jobUtil.pauseAllJob();
         return CommonResponse.succeedResult();
     }
-    
+
     /**
      * 恢复所有
+     *
      * @return com.kanlon.model.ReturnMsg
      **/
-    @RequestMapping(value="/repauseAll",method=RequestMethod.GET)
-    public CommonResponse repauseAllJob() throws Exception {
+    @RequestMapping(value = "/resumeAll", method = RequestMethod.GET)
+    public CommonResponse resumeAllJob() throws Exception {
         jobUtil.resumeAllJob();
         return CommonResponse.succeedResult();
     }
 
-    /**
-     * 从自己的数据库表获取任务，包含任务id
-     * @return com.kanlon.model.CommonResponse
-     **/
-    @GetMapping("/allJobs")
-    public CommonResponse getAllTaskFromMyTable(){
-        return CommonResponse.succeedResult(appQuartzService.getAllTaskFromMyTable());
-    }
 
     /**
      * 获取所有任务
+     *
      * @return com.kanlon.model.ReturnMsg
      **/
     @GetMapping("/tasks")
     public CommonResponse getAllTask() throws SchedulerException {
-        GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
-        Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-        List<ScheduleJob> jobList = new ArrayList<>();
-        for (JobKey jobKey : jobKeys) {
-            List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
-            for (Trigger trigger : triggers) {
-                ScheduleJob job = new ScheduleJob();
-                job.setName(jobKey.getName());
-                job.setGroup(jobKey.getGroup());
-                job.setDescription("触发器:" + trigger.getKey());
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
-                job.setStatus(triggerState.name());
-                if (trigger instanceof CronTrigger) {
-                    CronTrigger cronTrigger = (CronTrigger) trigger;
-                    String cronExpression = cronTrigger.getCronExpression();
-                    job.setCron(cronExpression);
-                }
-                jobList.add(job);
-            }
-        }
-        return CommonResponse.succeedResult(jobList);
+        return jobUtil.getAllTask();
+    }
+
+
+    /**
+     * 根据任务id获取任务执行记录
+     * @param quartzId 任务id
+     * @param pageModel 分页参数
+     * @return com.kanlon.model.CommonResponse
+     **/
+    @GetMapping("/job/results")
+    public CommonResponse getQuartzResultByQuartzId(@RequestParam("quartzId") Long quartzId,PageModel pageModel){
+        return CommonResponse.succeedResult(quartzResultService.getQuartzResultByQuartzId(quartzId,pageModel));
     }
 
 }

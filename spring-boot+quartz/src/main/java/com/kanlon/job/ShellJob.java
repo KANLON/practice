@@ -1,4 +1,4 @@
-package com.kanlon.task;
+package com.kanlon.job;
 
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * 任务2，可以传递参数
+ * 执行shell的定时任务
  * @author zhangcanlong
  * @since 2019-04-10
  **/

@@ -12,8 +12,11 @@ public class ScheduleJob {
         private String name;
         /**任务组名字*/
         private String group;
+        /**描述*/
         private String description;
+        /**cron表达式*/
         private String cron;
+        /**状态*/
         private String status;
 
         public String getName() {
