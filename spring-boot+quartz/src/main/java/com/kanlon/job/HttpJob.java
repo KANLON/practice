@@ -43,6 +43,8 @@ public class HttpJob implements Job {
         model.setCtime(date);
         model.setStartTime(date);
         model.setDt(DateTimeFormat.printLocal(date));
+        //设置调度成功
+        model.setScheduleResult(1);
         Long oldTime = System.currentTimeMillis();
         try {
             JobDataMap data = context.getTrigger().getJobDataMap();
