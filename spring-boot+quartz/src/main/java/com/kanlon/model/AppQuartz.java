@@ -1,6 +1,9 @@
 package com.kanlon.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Date;
 
 /**
  * tb_app_quartz表的实体类
@@ -9,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  **/
 public class AppQuartz {
     /**任务主键*/
-    private Integer quartzId;
+    private Long quartzId;
     /**任务名称*/
     private String jobName;
     /**任务组名*/
@@ -20,7 +23,8 @@ public class AppQuartz {
     @JsonProperty("chargeDepartment")
     private String chargeDepartment;
     /**任务开始时间*/
-    private String startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date startTime;
     /**corn表达式*/
     private String cronExpression;
     /**需要传递的参数*/
@@ -30,15 +34,17 @@ public class AppQuartz {
     /**描述*/
     private String description;
     /**创建时间*/
-    private String ctime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date ctime;
     /**修改时间*/
-    private String mtime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date mtime;
 
-    public Integer getQuartzId() {
+    public Long getQuartzId() {
         return quartzId;
     }
 
-    public void setQuartzId(Integer quartzId) {
+    public void setQuartzId(Long quartzId) {
         this.quartzId = quartzId;
     }
 
@@ -74,11 +80,11 @@ public class AppQuartz {
         this.chargeDepartment = chargeDepartment;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
@@ -106,19 +112,19 @@ public class AppQuartz {
         this.description = description;
     }
 
-    public String getCtime() {
+    public Date getCtime() {
         return ctime;
     }
 
-    public void setCtime(String ctime) {
+    public void setCtime(Date ctime) {
         this.ctime = ctime;
     }
 
-    public String getMtime() {
+    public Date getMtime() {
         return mtime;
     }
 
-    public void setMtime(String mtime) {
+    public void setMtime(Date mtime) {
         this.mtime = mtime;
     }
 

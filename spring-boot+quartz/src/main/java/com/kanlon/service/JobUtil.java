@@ -62,7 +62,7 @@ public class JobUtil {
         //按新的cronExpression表达式构建一个新的trigger
         CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
-                .startAt(DateTimeFormat.parseIOS(appQuartz.getStartTime()))
+                .startAt(appQuartz.getStartTime())
                 .withSchedule(scheduleBuilder)
                 .withDescription(appQuartz.getDescription())
                 .build();
@@ -95,7 +95,7 @@ public class JobUtil {
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
         //按新的cronExpression表达式重新构建trigger
         trigger = trigger.getTriggerBuilder()
-                .startAt(DateTimeFormat.parseIOS(appQuartz.getStartTime()))
+                .startAt(appQuartz.getStartTime())
                 .withIdentity(triggerKey)
                 .withDescription(appQuartz.getDescription())
                 .withSchedule(scheduleBuilder).build();

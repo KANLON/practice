@@ -60,8 +60,8 @@ public class JobController {
     @PostMapping(value = "/addJob")
     public CommonResponse addJob(@Valid @RequestBody AppQuartz appQuartz) throws Exception {
         Date date = new Date();
-        appQuartz.setCtime(DateTimeFormat.printIOS(date));
-        appQuartz.setMtime(DateTimeFormat.printIOS(date));
+        appQuartz.setCtime(date);
+        appQuartz.setMtime(date);
         appQuartzService.insertAppQuartzSer(appQuartz);
         return CommonResponse.succeedResult();
     }
@@ -78,7 +78,7 @@ public class JobController {
         if(appQuartz.getQuartzId()==null){
             return CommonResponse.failedResult("更新的任务id不能为null",-1);
         }
-        appQuartz.setMtime(DateTimeFormat.printIOS(new Date()));
+        appQuartz.setMtime(new Date());
         appQuartzService.updateAppQuartzSer(appQuartz);
         return CommonResponse.succeedResult();
     }
@@ -90,8 +90,8 @@ public class JobController {
      * @return com.kanlon.model.ReturnMsg
      **/
     @PostMapping(value = "/deleteJob")
-    public CommonResponse deleteJob(@Valid @NotEmpty @RequestBody Integer[] quartzIds) throws SchedulerException {
-        for (Integer quartzId : quartzIds) {
+    public CommonResponse deleteJob(@Valid @NotEmpty @RequestBody Long[] quartzIds) throws SchedulerException {
+        for (Long quartzId : quartzIds) {
             appQuartzService.deleteAppQuartzByIdSer(quartzId);
         }
         logger.info("要删除的任务id为："+ Arrays.toString(quartzIds));
@@ -105,8 +105,8 @@ public class JobController {
      * @return com.kanlon.model.ReturnMsg
      **/
     @PostMapping(value = "/pauseJob")
-    public CommonResponse pauseJob(@Valid @NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
-        for (Integer quartzId : quartzIds) {
+    public CommonResponse pauseJob(@Valid @NotEmpty @RequestBody Long[] quartzIds) throws Exception {
+        for (Long quartzId : quartzIds) {
             AppQuartz appQuartz = appQuartzService.selectAppQuartzByIdSer(quartzId);
             jobUtil.pauseJob(appQuartz.getJobName(), appQuartz.getJobGroup());
         }
@@ -119,8 +119,8 @@ public class JobController {
      * @return com.kanlon.model.ReturnMsg
      **/
     @PostMapping(value = "/resumeJob")
-    public CommonResponse resumeJob(@Valid @NotEmpty @RequestBody Integer[] quartzIds) throws Exception {
-        for (Integer quartzId : quartzIds) {
+    public CommonResponse resumeJob(@Valid @NotEmpty @RequestBody Long[] quartzIds) throws Exception {
+        for (Long quartzId : quartzIds) {
             AppQuartz appQuartz = appQuartzService.selectAppQuartzByIdSer(quartzId);
             jobUtil.resumeJob(appQuartz.getJobName(), appQuartz.getJobGroup());
         }
@@ -168,8 +168,24 @@ public class JobController {
      * @return com.kanlon.model.CommonResponse
      **/
     @GetMapping("/job/results")
-    public CommonResponse getQuartzResultByQuartzId(@RequestParam("quartzId") Long quartzId,PageModel pageModel){
-        return CommonResponse.succeedResult(quartzResultService.getQuartzResultByQuartzId(quartzId,pageModel));
+    public CommonResponse getQuartzResultByQuartzId(@RequestParam("quartzId") Long quartzId,
+            @RequestParam(value = "st",required = false) String st,
+            @RequestParam(value = "et",required = false) String et,
+            @RequestParam(value = "execResult",required = false) Integer execResult,PageModel pageModel){
+        if(st==null){
+            st="2000-10-10";
+        }
+        if(et==null){
+            et="2042-10-10";
+        }
+        //如果不传执行结果，则查询啊所有执行日志结果
+        if(execResult==null){
+            return CommonResponse.succeedResult(quartzResultService.getQuartzResultByQuartzId(quartzId,st,et,pageModel));
+        }else{
+            return CommonResponse.succeedResult(quartzResultService.getQuartzResultByQuartzIdAndResult(quartzId,st,et,execResult,pageModel));
+        }
+
     }
+
 
 }

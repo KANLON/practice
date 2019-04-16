@@ -54,7 +54,7 @@ public class AppQuartzService {
      * @param quartzId 根据任务id
      * @return com.kanlon.model.AppQuartz
      **/
-    public AppQuartz selectAppQuartzByIdSer(Integer quartzId) {
+    public AppQuartz selectAppQuartzByIdSer(Long quartzId) {
         AppQuartz appQuartz = cronMapper.selectTaskById(quartzId);
         if(appQuartz==null){
             throw new QuartzException("找不到该id的任务");
@@ -67,7 +67,7 @@ public class AppQuartzService {
      * @param quartzId 任务id
      **/
     @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = {Exception.class})
-    public void deleteAppQuartzByIdSer(Integer quartzId) throws SchedulerException {
+    public void deleteAppQuartzByIdSer(Long quartzId) throws SchedulerException {
         AppQuartz appQuartz  = this.selectAppQuartzByIdSer(quartzId);
         jobUtil.deleteJob(appQuartz.getJobName(),appQuartz.getJobGroup());
         cronMapper.deleteAppQuartzByIdSer(quartzId);

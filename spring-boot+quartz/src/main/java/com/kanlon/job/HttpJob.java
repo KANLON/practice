@@ -39,7 +39,11 @@ public class HttpJob implements Job {
     public void execute(JobExecutionContext context) {
         //设置执行结果
         QuartzResultModel model = new QuartzResultModel();
-        model.setCtime(DateTimeFormat.printIOS(new Date()));
+        Date date = new Date();
+        model.setCtime(date);
+        model.setStartTime(date);
+        model.setDt(DateTimeFormat.printLocal(date));
+        model.setExecResult(1);
         Long oldTime = System.currentTimeMillis();
         try {
             JobDataMap data = context.getTrigger().getJobDataMap();
@@ -89,7 +93,7 @@ public class HttpJob implements Job {
     private void addResult(long oldTime,String remark, QuartzResultModel model) {
         logger.info(remark);
         model.setExecTime(System.currentTimeMillis() - oldTime);
-        model.setCompleteTime(DateTimeFormat.printIOS(new Date()));
+        model.setCompleteTime(new Date());
         model.setRemark(remark);
         if (model.getExecResult() == null) {
             model.setExecResult(0);

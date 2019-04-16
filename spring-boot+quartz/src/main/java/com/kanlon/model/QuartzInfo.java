@@ -1,6 +1,7 @@
 package com.kanlon.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kanlon.common.DateTimeFormat;
 
 import java.util.Date;
@@ -23,7 +24,8 @@ public class QuartzInfo {
     /**任务负责人部门*/
     private String chargeDepartment;
     /**任务开始时间*/
-    private String startTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date startTime;
     /**corn表达式*/
     private String cronExpression;
     /**需要传递的参数*/
@@ -31,7 +33,8 @@ public class QuartzInfo {
     /**需要传递的参数2*/
     private String invokeParam2;
     /**修改时间*/
-    private String mtime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date mtime;
     /**描述*/
     private String description;
     /**下次执行时间,获取时，将long型时间转化为“yyyy-MM-dd HH:mm:ss”这种形式的字符串*/
@@ -63,11 +66,11 @@ public class QuartzInfo {
         this.jobGroup = jobGroup;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
@@ -87,11 +90,11 @@ public class QuartzInfo {
         this.invokeParam = invokeParam;
     }
 
-    public String getMtime() {
+    public Date getMtime() {
         return mtime;
     }
 
-    public void setMtime(String mtime) {
+    public void setMtime(Date mtime) {
         this.mtime = mtime;
     }
 

@@ -1,12 +1,11 @@
 package com.kanlon.service;
 
 import com.kanlon.mapper.QuartzResultMapper;
+import com.kanlon.model.PageDatasModel;
 import com.kanlon.model.PageModel;
 import com.kanlon.model.QuartzResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 执行日志结果service
@@ -24,11 +23,32 @@ public class QuartzResultService {
     /**
      * 根据任务id，获取执行记录
      * @param quartzId 任务id
+     * @param st 开始日期
+     * @param et 结束日期
+     * @param execResult 执行结果
      * @param pageModel 分页参数
      * @return 结果集
      **/
-    public List<QuartzResultModel> getQuartzResultByQuartzId(long quartzId, PageModel pageModel){
-        return quartzResultMapper.selectByQuartzId(quartzId,pageModel.getStart(),pageModel.getPageSize());
+    public PageDatasModel getQuartzResultByQuartzIdAndResult(long quartzId,String st,String et,Integer execResult, PageModel pageModel){
+        PageDatasModel pageDatasModel = new PageDatasModel(pageModel);
+        pageDatasModel.setTotalSize(quartzResultMapper.selectResultCntByQuartzIdAndDateAndResult(quartzId,st,et,execResult));
+        pageDatasModel.setDatas(quartzResultMapper.selectResultByQuartzIdAndDateAndResult(quartzId,st,et,execResult,pageModel.getStart(),pageModel.getPageSize()));
+        return pageDatasModel;
+    }
+
+    /**
+     * 根据任务id，获取执行记录
+     * @param quartzId 任务id
+     * @param st 开始日期
+     * @param et 结束日期
+     * @param pageModel 分页参数
+     * @return 结果集
+     **/
+    public PageDatasModel getQuartzResultByQuartzId(long quartzId,String st,String et, PageModel pageModel){
+        PageDatasModel pageDatasModel = new PageDatasModel(pageModel);
+        pageDatasModel.setTotalSize(quartzResultMapper.selectResultCntByQuartzIdAndDate(quartzId,st,et));
+        pageDatasModel.setDatas(quartzResultMapper.selectResultByQuartzIdAndDate(quartzId,st,et,pageModel.getStart(),pageModel.getPageSize()));
+        return pageDatasModel;
     }
 
     /**

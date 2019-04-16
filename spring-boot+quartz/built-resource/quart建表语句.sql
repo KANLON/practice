@@ -1,5 +1,8 @@
 /* quartz的相关的建表语句 *  */
-USE test;
+
+CREATE DATABASE IF NOT EXISTS `spring_quartz`  DEFAULT CHARACTER SET utf8;
+
+USE `spring_quartz`;
 
 DROP TABLE IF EXISTS qrtz_fired_triggers;
 DROP TABLE IF EXISTS qrtz_paused_trigger_grps;
@@ -38,16 +41,18 @@ CREATE TABLE tb_quartz_result
 (
   id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
   quartz_id INT(11) NOT NULL  COMMENT '任务id',
-  start_time DATETIME NOT NULL COMMENT '调度开始时间',
+  dt CHAR(10) NOT NULL COMMENT '调度日期',
+  start_time DATETIME NOT NULL  COMMENT '调度开始时间',
   schedule_result TINYINT(1) NOT NULL COMMENT '调度结果。0,表示失败，1表示成功。2表示执行中',
   exec_result TINYINT(1) NOT NULL COMMENT '执行结果。0,表示失败，1表示成功。2表示执行中',
   exec_time INT(11) NOT NULL COMMENT '执行时间，毫秒',
-  complete_time DATETIME NOT NULL COMMENT '调度/执行完成时间',
+  complete_time DATETIME NOT NULL  DEFAULT NOW()  COMMENT '调度/执行完成时间',
   remark VARCHAR(65535) COMMENT '备注',
   ctime TIMESTAMP NOT NULL DEFAULT NOW() COMMENT '创建时间'
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='任务执行日志结果表';
 -- 创建索引
 ALTER TABLE tb_quartz_result ADD INDEX quartz_id_index (quartz_id);
+ALTER TABLE tb_quartz_result ADD INDEX dt_index (dt);
 
 CREATE TABLE qrtz_job_details
   (
@@ -211,4 +216,8 @@ FROM
 WHERE tb.`dr` = 0
 ORDER BY tb.mtime DESC
 LIMIT 0, 100
+-- 查询任务执行结果
+SELECT * FROM  tb_quartz_result  WHERE quartz_id=11 ORDER BY  ctime DESC LIMIT 0,10
+
+
 

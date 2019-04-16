@@ -44,7 +44,7 @@ public interface QuartzCronMapper {
      * @return 返回任务信息
      **/
     @Select("select * from "+TABLE_NAME +" where quartz_id=#{id}")
-    AppQuartz selectTaskById(Integer id);
+    AppQuartz selectTaskById(Long id);
 
     /**
      * 插入一个新任务
@@ -52,7 +52,7 @@ public interface QuartzCronMapper {
      * @return 插入的行数
      **/
     @Insert("insert into "+TABLE_NAME+"(job_name,job_group,charge,charge_department,start_time,cron_expression,invoke_param,invoke_param2,ctime,mtime)" +
-            " values (#{jobName},#{jobGroup},#{charge},#{chargeDepartment},#{startTime},#{cronExpression},#{invokeParam},#{invokeParam2},#{ctime},#{mtime})")
+            " values (#{jobName},#{jobGroup},#{charge},#{chargeDepartment},#{startTime,jdbcType=TIMESTAMP},#{cronExpression},#{invokeParam},#{invokeParam2},#{ctime,jdbcType=TIMESTAMP},#{mtime,jdbcType=TIMESTAMP})")
     @Options(useGeneratedKeys = true, keyProperty = "quartzId")
     Integer insertOne(AppQuartz quartz);
 
@@ -62,7 +62,7 @@ public interface QuartzCronMapper {
      * @return java.lang.Integer 删除行数
      **/
     @Delete("delete from "+ TABLE_NAME + " where quartz_id=#{id}")
-    Integer deleteAppQuartzByIdSer(Integer id);
+    Integer deleteAppQuartzByIdSer(Long id);
 
     /**
      * 根据新的任务信息更新任务
@@ -96,7 +96,7 @@ public interface QuartzCronMapper {
                     SET("charge_department=#{chargeDepartment}");
                 }
                 if(condition.getStartTime()!=null){
-                    SET("start_time=#{startTime}");
+                    SET("start_time=#{startTime,jdbcType=TIMESTAMP}");
                 }
                 if(condition.getCronExpression()!=null){
                     SET("cron_expression=#{cronExpression}");
@@ -108,7 +108,7 @@ public interface QuartzCronMapper {
                     SET("invoke_param2=#{invokeParam2}");
                 }
                 if(condition.getMtime()!=null){
-                    SET("mtime=#{mtime}");
+                    SET("mtime=#{mtime,jdbcType=TIMESTAMP}");
                 }
                 WHERE("quartz_id=#{quartzId}");
             }}.toString();
