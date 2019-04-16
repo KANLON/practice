@@ -13,10 +13,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan("com.kanlon.mapper")
 @SpringBootApplication
 @EnableAsync
-public class SpringBootQuartzDemoApplication {
+public class App {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootQuartzDemoApplication.class, args);
+        SpringApplication.run(App.class, args);
     }
 
 }
