@@ -1,7 +1,6 @@
 package com.kanlon.service;
 
 import com.kanlon.common.Constant;
-import com.kanlon.common.DateTimeFormat;
 import com.kanlon.exception.QuartzException;
 import com.kanlon.model.AppQuartz;
 import com.kanlon.model.CommonResponse;
@@ -13,7 +12,6 @@ import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -32,7 +30,6 @@ import java.util.Set;
 public class JobUtil {
 
     @Autowired
-    @Qualifier("scheduler")
     private Scheduler scheduler;
 
     private Logger logger = LoggerFactory.getLogger(JobUtil.class);

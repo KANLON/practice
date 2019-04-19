@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +27,7 @@ import java.util.Date;
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
-public class HttpJob implements Job {
+public class HttpJob extends QuartzJobBean {
     private Logger logger = LoggerFactory.getLogger(HttpJob.class);
 
     @Autowired
@@ -36,7 +37,7 @@ public class HttpJob implements Job {
     private QuartzResultService quartzResultService;
 
     @Override
-    public void execute(JobExecutionContext context) {
+    protected void executeInternal(JobExecutionContext context) {
         //设置执行结果
         QuartzResultModel model = new QuartzResultModel();
         Date date = new Date();
@@ -47,7 +48,9 @@ public class HttpJob implements Job {
         model.setScheduleResult(1);
         Long oldTime = System.currentTimeMillis();
         try {
-            JobDataMap data = context.getTrigger().getJobDataMap();
+            Trigger trigger = context.getTrigger();
+            logger.info("执行的任务名为："+trigger.getKey());
+            JobDataMap data = trigger.getJobDataMap();
             String invokeParam = (String) data.get(Constant.INVOKE_PARAM_STR);
             model.setQuartzId((Long) data.get(Constant.QUARTZ_ID_STR));
             ResponseEntity<CommonResponse> entity;

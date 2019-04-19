@@ -3,6 +3,7 @@ package com.kanlon.job;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,11 +14,11 @@ import org.springframework.stereotype.Component;
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution
 @Component
-public class ShellJob implements Job {
+public class ShellJob extends QuartzJobBean {
     private Logger logger = LoggerFactory.getLogger(ShellJob.class);
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext context) {
         JobDataMap data=context.getTrigger().getJobDataMap();
         String invokeParam =(String) data.get("invokeParam");
             //在这里实现业务逻辑
