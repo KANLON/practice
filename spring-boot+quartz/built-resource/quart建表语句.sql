@@ -23,7 +23,7 @@ CREATE TABLE tb_app_quartz
   quartz_id INT(11) PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
   job_name VARCHAR(100) NOT NULL COMMENT '任务名称',
   job_group VARCHAR(100) NOT NULL DEFAULT 'default' COMMENT '任务分组',
-  start_time DATETIME NOT NULL DEFAULT NOW() COMMENT '任务开始时间',
+  start_time DATETIME NOT NULL COMMENT '任务开始时间',
   cron_expression VARCHAR(20) NOT NULL COMMENT 'corn表格式',
   invoke_param VARCHAR(255) NOT NULL COMMENT '需要传递的参数',
   invoke_param2 VARCHAR(255) COMMENT '需要传递的参数2',
@@ -46,7 +46,7 @@ CREATE TABLE tb_quartz_result
   schedule_result TINYINT(1) NOT NULL COMMENT '调度结果。0,表示失败，1表示成功。2表示执行中',
   exec_result TINYINT(1) NOT NULL COMMENT '执行结果。0,表示失败，1表示成功。2表示执行中',
   exec_time INT(11) NOT NULL COMMENT '执行时间，毫秒',
-  complete_time DATETIME NOT NULL  DEFAULT NOW()  COMMENT '调度/执行完成时间',
+  complete_time DATETIME NOT NULL  COMMENT '调度/执行完成时间',
   remark VARCHAR(65535) COMMENT '备注',
   ctime TIMESTAMP NOT NULL DEFAULT NOW() COMMENT '创建时间'
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='任务执行日志结果表';
