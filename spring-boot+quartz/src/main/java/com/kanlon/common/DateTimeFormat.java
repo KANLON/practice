@@ -21,6 +21,7 @@ public class DateTimeFormat implements Formatter<Date> {
     @Override
     public Date parse(String s, Locale locale) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(DateTimeFormat.NORMAL_PATTERN);
+        sdf.setTimeZone(TimeZone.getTimeZone(Constant.TIMEZONE_STR));
         Date ret = sdf.parse(s);
         return ret;
     }
@@ -28,6 +29,7 @@ public class DateTimeFormat implements Formatter<Date> {
     @Override
     public String print(Date date, Locale locale) {
         SimpleDateFormat sdf = new SimpleDateFormat(DateTimeFormat.NORMAL_PATTERN);
+        sdf.setTimeZone(TimeZone.getTimeZone(Constant.TIMEZONE_STR));
         String ret = sdf.format(date);
         return ret;
     }
@@ -38,9 +40,7 @@ public class DateTimeFormat implements Formatter<Date> {
      * @return java.util.Date
      **/
     public static Date parseIOS(String s) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat(DateTimeFormat.NORMAL_PATTERN);
-        Date ret = sdf.parse(s);
-        return ret;
+        return new DateTimeFormat().parse(s,Locale.SIMPLIFIED_CHINESE);
     }
 
     /**
@@ -49,9 +49,7 @@ public class DateTimeFormat implements Formatter<Date> {
      * @return java.lang.String
      **/
     public static String printIOS(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat(DateTimeFormat.NORMAL_PATTERN);
-        String ret = sdf.format(date);
-        return ret;
+        return new DateTimeFormat().print(date,Locale.SIMPLIFIED_CHINESE);
     }
     /**
      * 根据字符串解析本地日期，格式为："yyyy-MM-dd"
@@ -60,6 +58,7 @@ public class DateTimeFormat implements Formatter<Date> {
      **/
     public static Date parseLocal(String s) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(DateTimeFormat.DATE_FORMAT);
+        sdf.setTimeZone(TimeZone.getTimeZone(Constant.TIMEZONE_STR));
         Date ret = sdf.parse(s);
         return ret;
     }
@@ -71,6 +70,7 @@ public class DateTimeFormat implements Formatter<Date> {
      **/
     public static String printLocal(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat(DateTimeFormat.DATE_FORMAT);
+        sdf.setTimeZone(TimeZone.getTimeZone(Constant.TIMEZONE_STR));
         String ret = sdf.format(date);
         return ret;
     }

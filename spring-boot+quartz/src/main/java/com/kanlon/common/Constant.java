@@ -15,4 +15,6 @@ public class Constant {
     public final static String INVOKE_PARAM_STR="invokeParam";
     /**数据库任务id参数*/
     public final static String QUARTZ_ID_STR = "quartzId";
+    /**东八区时间*/
+    public final static String TIMEZONE_STR="GMT+8";
 }
