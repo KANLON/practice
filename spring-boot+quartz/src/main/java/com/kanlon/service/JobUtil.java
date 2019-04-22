@@ -2,6 +2,7 @@ package com.kanlon.service;
 
 import com.kanlon.common.Constant;
 import com.kanlon.exception.QuartzException;
+import com.kanlon.job.EmailJob;
 import com.kanlon.model.AppQuartz;
 import com.kanlon.model.CommonResponse;
 import com.kanlon.model.ScheduleJob;
@@ -13,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -54,6 +54,12 @@ public class JobUtil {
                     .withDescription(appQuartz.getDescription())
                     .build();
         }
+        if(Constant.EMAIL_STR.equals(appQuartz.getJobGroup())){
+            jobDetail = JobBuilder.newJob(EmailJob.class)
+                    .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
+                    .withDescription(appQuartz.getDescription())
+                    .build();
+        }
         //表达式调度构建器(即任务执行的时间,不立即执行)
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
         //构建trigger
@@ -64,10 +70,9 @@ public class JobUtil {
                 .withDescription(appQuartz.getDescription())
                 .build();
         //传递参数
-        if (!StringUtils.isEmpty(appQuartz.getInvokeParam())) {
-            trigger.getJobDataMap().put(Constant.INVOKE_PARAM_STR, appQuartz.getInvokeParam());
-            trigger.getJobDataMap().put(Constant.QUARTZ_ID_STR, appQuartz.getQuartzId());
-        }
+        trigger.getJobDataMap().put(Constant.INVOKE_PARAM_STR, appQuartz.getInvokeParam());
+        trigger.getJobDataMap().put(Constant.INVOKE_PARAM2_STR, appQuartz.getInvokeParam2());
+        trigger.getJobDataMap().put(Constant.QUARTZ_ID_STR, appQuartz.getQuartzId());
         //将触发器与任务绑定在一起
         scheduler.scheduleJob(jobDetail, trigger);
         logger.info("插入内置quartz成功");
@@ -97,10 +102,9 @@ public class JobUtil {
                 .withDescription(appQuartz.getDescription())
                 .withSchedule(scheduleBuilder).build();
         //修改参数
-        if (!trigger.getJobDataMap().get(Constant.INVOKE_PARAM_STR).equals(appQuartz.getInvokeParam())) {
-            trigger.getJobDataMap().put(Constant.INVOKE_PARAM_STR, appQuartz.getInvokeParam());
-            trigger.getJobDataMap().put(Constant.QUARTZ_ID_STR, appQuartz.getQuartzId());
-        }
+        trigger.getJobDataMap().put(Constant.QUARTZ_ID_STR, appQuartz.getQuartzId());
+        trigger.getJobDataMap().put(Constant.INVOKE_PARAM_STR, appQuartz.getInvokeParam());
+        trigger.getJobDataMap().put(Constant.INVOKE_PARAM2_STR, appQuartz.getInvokeParam2());
         //按新的trigger重新设置job执行
         scheduler.rescheduleJob(triggerKey, trigger);
         logger.info("修改内置quartz信息成功");

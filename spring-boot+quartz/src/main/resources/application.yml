@@ -28,11 +28,34 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 1000MB
+  # 邮件配置
+  mail:
+    host: smtp.126.com
+    username: s19961234@126.com
+    password: s19961234
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+
 
 # 驼峰自动转下划线
 mybatis:
   configuration:
     mapUnderscoreToCamelCase: true
+
+# 以谁来发送邮件
+mail:
+  fromMail:
+    addr: s19961234@126.com
+
+
+
+
 
 
 

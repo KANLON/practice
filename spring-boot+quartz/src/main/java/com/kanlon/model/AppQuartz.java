@@ -29,7 +29,7 @@ public class AppQuartz {
     private String cronExpression;
     /**需要传递的参数*/
     private String invokeParam;
-    /**需要传递的参数2*/
+    /**需要传递的参数2，目前参数2只用于邮件发送时指定发送标题和正文内容，并以#分割*/
     private String invokeParam2;
     /**描述*/
     private String description;

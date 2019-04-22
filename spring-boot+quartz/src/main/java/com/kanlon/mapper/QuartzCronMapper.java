@@ -47,6 +47,14 @@ public interface QuartzCronMapper {
     AppQuartz selectTaskById(Long id);
 
     /**
+     * 根据任务名称查找是否含有了该名称的调度任务数
+     * @param jobName 任务名称
+     * @return 含有该名称的数量
+     **/
+    @Select("select count(quartz_id) from "+TABLE_NAME +" where job_name=#{jobName}")
+    Integer selectCntByJobName(String jobName);
+
+    /**
      * 插入一个新任务
      * @param quartz 任务信息
      * @return 插入的行数

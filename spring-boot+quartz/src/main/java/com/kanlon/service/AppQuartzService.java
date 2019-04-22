@@ -45,6 +45,11 @@ public class AppQuartzService {
      **/
     @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = {Exception.class})
     public void insertAppQuartzSer(AppQuartz appQuartz) throws Exception {
+        //先判断是否含有相同的名字的调度
+        int row = cronMapper.selectCntByJobName(appQuartz.getJobName());
+        if(row>=1){
+            throw new QuartzException("该任务名称已经存在了，请选择另外一个名称进行创建任务");
+        }
         cronMapper.insertOne(appQuartz);
         jobUtil.addJob(appQuartz);
         logger.info("添加自己的quartz信息成功");

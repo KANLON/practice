@@ -11,6 +11,8 @@ public class Constant {
     public final static String HTTP_STR="http";
     /**表示执行shell的任务*/
     public final static String SHELL_STR="shell";
+    /**表示执行邮箱调度的任务*/
+    public final static String EMAIL_STR = "email";
     /**任务的参数key*/
     public final static String INVOKE_PARAM_STR="invokeParam";
     /**任务的参数2 key*/
