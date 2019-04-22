@@ -77,7 +77,6 @@ public class JobController {
         if(appQuartz.getQuartzId()==null){
             return CommonResponse.failedResult("更新的任务id不能为null",-1);
         }
-        appQuartz.setMtime(new Date());
         appQuartzService.updateAppQuartzSer(appQuartz);
         return CommonResponse.succeedResult();
     }

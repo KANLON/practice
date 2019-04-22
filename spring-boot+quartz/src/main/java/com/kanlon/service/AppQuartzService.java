@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,18 +76,39 @@ public class AppQuartzService {
 
     /**
      * 更新任务
-     * @param appQuartz 根据任务实体类信息
+     * @param newAppQuartz 根据任务实体类信息
      **/
     @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = {Exception.class})
-    public void updateAppQuartzSer(AppQuartz appQuartz) throws SchedulerException, ParseException {
-        AppQuartz oldAppQuartz = this.selectAppQuartzByIdSer(appQuartz.getQuartzId());
+    public void updateAppQuartzSer(AppQuartz newAppQuartz) throws SchedulerException, ParseException {
+        AppQuartz oldAppQuartz = this.selectAppQuartzByIdSer(newAppQuartz.getQuartzId());
         if(oldAppQuartz==null){
             throw new QuartzException("该任务id不存在，不能执行更新操作");
         }
-        appQuartz.setJobName(oldAppQuartz.getJobName());
-        appQuartz.setJobGroup(oldAppQuartz.getJobGroup());
-        jobUtil.modifyJob(appQuartz);
-        cronMapper.updateAppQuartzSer(appQuartz);
+        //根据新的任务信息更新旧的任务信息
+        if(newAppQuartz.getCronExpression()!=null){
+            oldAppQuartz.setCronExpression(newAppQuartz.getCronExpression());
+        }
+        if(newAppQuartz.getStartTime()!=null){
+            oldAppQuartz.setStartTime(newAppQuartz.getStartTime());
+        }
+        if(newAppQuartz.getChargeDepartment()!=null){
+            oldAppQuartz.setChargeDepartment(newAppQuartz.getChargeDepartment());
+        }
+        if(newAppQuartz.getCharge()!=null){
+            oldAppQuartz.setCharge(newAppQuartz.getCharge());
+        }
+        if(newAppQuartz.getInvokeParam()!=null){
+            oldAppQuartz.setInvokeParam(newAppQuartz.getInvokeParam());
+        }
+        if(newAppQuartz.getInvokeParam2()!=null){
+            oldAppQuartz.setInvokeParam2(newAppQuartz.getInvokeParam2());
+        }
+        if(newAppQuartz.getDescription()!=null){
+            oldAppQuartz.setDescription(newAppQuartz.getDescription());
+        }
+        oldAppQuartz.setMtime(new Date());
+        jobUtil.modifyJob(oldAppQuartz);
+        cronMapper.updateAppQuartzSer(oldAppQuartz);
         logger.info("修改自己建立的辅助quartz信息成功");
     }
 

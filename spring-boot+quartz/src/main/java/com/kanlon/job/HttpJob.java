@@ -1,10 +1,8 @@
 package com.kanlon.job;
 
 import com.kanlon.common.Constant;
-import com.kanlon.common.DateTimeFormat;
 import com.kanlon.model.CommonResponse;
 import com.kanlon.model.QuartzResultModel;
-import com.kanlon.service.QuartzResultService;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-
 /**
  * http协议的定时任务
  *
@@ -28,24 +24,18 @@ import java.util.Date;
 @DisallowConcurrentExecution
 @Component
 public class HttpJob extends QuartzJobBean {
-    private Logger logger = LoggerFactory.getLogger(HttpJob.class);
+    private  Logger logger = LoggerFactory.getLogger(HttpJob.class);
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Autowired
-    private QuartzResultService quartzResultService;
+    private CommonJobService commonJobService;
 
     @Override
     protected void executeInternal(JobExecutionContext context) {
-        //设置执行结果
-        QuartzResultModel model = new QuartzResultModel();
-        Date date = new Date();
-        model.setCtime(date);
-        model.setStartTime(date);
-        model.setDt(DateTimeFormat.printLocal(date));
-        //设置调度成功
-        model.setScheduleResult(1);
+        //初始调度结果
+        QuartzResultModel model = commonJobService.startSchedule();
         Long oldTime = System.currentTimeMillis();
         try {
             Trigger trigger = context.getTrigger();
@@ -59,53 +49,38 @@ public class HttpJob extends QuartzJobBean {
             } catch (HttpClientErrorException e) {
                 //40*，50* 错误
                 logger.error(e.getLocalizedMessage(), e);
-                addResult(oldTime,e.getLocalizedMessage(),model);
+                commonJobService.addResult(oldTime,e.getLocalizedMessage(),model,logger);
                 return;
             }
             if (entity.getStatusCode() != HttpStatus.OK) {
                 StringBuffer buffer = new StringBuffer("请求\"" + invokeParam + "\"任务失败！" + "链接错误、请求方法或服务器错误：" + entity);
-                addResult(oldTime,buffer.toString(),model);
+                commonJobService.addResult(oldTime,buffer.toString(),model,logger);
                 return;
             }
             CommonResponse commonResponse = entity.getBody();
             //如果返回的数据为null
             if (commonResponse == null) {
                 StringBuffer buffer = new StringBuffer("请求\"" + invokeParam + "\"任务失败！" + "链接返回的数据为null");
-                addResult(oldTime,buffer.toString(), model);
+                commonJobService.addResult(oldTime,buffer.toString(), model,logger);
                 return;
             }
             //如果数据返回不正确，即执行不正确
             if (commonResponse.code != 1) {
                 StringBuffer buffer = new StringBuffer("请求\"" + invokeParam + "\"任务失败！" + "返回的错误信息为：" + commonResponse.getMessage() + "',错误信息数据为:" + commonResponse.getMessageData());
-                addResult(oldTime,buffer.toString(), model);
+                commonJobService.addResult(oldTime,buffer.toString(), model,logger);
                 return;
             }
             //如果任务执行成功
             StringBuffer buffer = new StringBuffer("请求\"" + invokeParam + "\"任务成功！" + "返回的信息为：" + commonResponse);
             model.setExecResult(1);
-            addResult(oldTime,buffer.toString(), model);
+            commonJobService.addResult(oldTime,buffer.toString(), model,logger);
         }catch (Exception e){
             //其他错误情况
             logger.error(e.getLocalizedMessage(), e);
-            addResult(oldTime,e.getLocalizedMessage(),model);
+            commonJobService.addResult(oldTime,e.getLocalizedMessage(),model,logger);
         }
     }
 
-    /**
-     * 添加执行结果到数据库
-     **/
-    private void addResult(long oldTime,String remark, QuartzResultModel model) {
-        logger.info(remark);
-        model.setExecTime(System.currentTimeMillis() - oldTime);
-        model.setCompleteTime(new Date());
-        model.setRemark(remark);
-        if (model.getExecResult() == null) {
-            model.setExecResult(0);
-        }
-        if (model.getScheduleResult() == null) {
-            model.setScheduleResult(0);
-        }
-        quartzResultService.addQuartzResult(model);
-    }
+
 
 }

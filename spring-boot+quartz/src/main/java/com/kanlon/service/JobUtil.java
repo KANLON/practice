@@ -56,7 +56,7 @@ public class JobUtil {
         }
         //表达式调度构建器(即任务执行的时间,不立即执行)
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
-        //按新的cronExpression表达式构建一个新的trigger
+        //构建trigger
         CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
                 .startAt(appQuartz.getStartTime())
