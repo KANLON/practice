@@ -63,6 +63,10 @@
 [spring-boot+quartz](/spring-boot+quartz)
 
 
+### 练习15 Spring Boot + GRPC 例子
+
+[spring-boot-grpc](/spring-boot-grpc)
+
 
 
 
