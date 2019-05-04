@@ -1,8 +1,10 @@
 package com.kanlon.model;
 
 import java.util.Map;
+
 /**
  * 公共返回信息
+ *
  * @author zhangcanlong
  * @since 2019-04-12
  **/
@@ -37,11 +39,11 @@ public class CommonResponse {
     }
 
     public static CommonResponse failedResult() {
-        return  failedResult("failed");
+        return failedResult("failed");
     }
 
     public static CommonResponse failedResult(String msg) {
-        return  failedResult(msg, -1);
+        return failedResult(msg, -1);
     }
 
     public static CommonResponse failedResult(String msg, int code) {
@@ -82,7 +84,7 @@ public class CommonResponse {
         res.setResultData(rst);
         res.setMessage(msg);
         res.setMessageData(messageData);
-        return  res;
+        return res;
     }
 
 
@@ -96,6 +98,7 @@ public class CommonResponse {
 
     @Override
     public String toString() {
-        return "CommonResponse{" + "code=" + code + ", message='" + message + '\'' + ", resultData=" + resultData + ", messageData=" + messageData + '}';
+        return "CommonResponse{" + "code=" + code + ", message='" + message + '\'' + ", resultData=" + resultData +
+                ", messageData=" + messageData + '}';
     }
 }

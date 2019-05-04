@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: spring-boot-grpc-eureka
+eureka:
+  server:
+    use-read-only-response-cache: false
+    eviction-interval-timer-in-ms: 3000
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/,http://localhost:9001/eureka/

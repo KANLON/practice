@@ -7,8 +7,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 启动类
- * @since 2019-04-09
+ *
  * @author zhangcanlong
+ * @since 2019-04-09
  **/
 @MapperScan("com.kanlon.mapper")
 @SpringBootApplication

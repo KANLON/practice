@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * 调度工作操作service
+ *
  * @author zhangcanlong
  * @since 2019/4/9 21:37
  **/
@@ -34,20 +35,23 @@ public class AppQuartzService {
 
     /**
      * 从自己创建的表格中获取所有任务，包含任务id
+     *
      * @return AppQuartz集合
      **/
-    public List<QuartzInfo> getAllTaskFromMyTable(PageModel page){
-        return cronMapper.selectAllJob(page.getStart(),page.getPageSize());
+    public List<QuartzInfo> getAllTaskFromMyTable(PageModel page) {
+        return cronMapper.selectAllJob(page.getStart(), page.getPageSize());
     }
+
     /**
      * 插入新的任务调度
+     *
      * @param appQuartz 新任务实体类
      **/
     @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = {Exception.class})
     public void insertAppQuartzSer(AppQuartz appQuartz) throws Exception {
         //先判断是否含有相同的名字的调度
         int row = cronMapper.selectCntByJobName(appQuartz.getJobName());
-        if(row>=1){
+        if (row >= 1) {
             throw new QuartzException("该任务名称已经存在了，请选择另外一个名称进行创建任务");
         }
         cronMapper.insertOne(appQuartz);
@@ -57,12 +61,13 @@ public class AppQuartzService {
 
     /**
      * 选择某个任务
+     *
      * @param quartzId 根据任务id
      * @return com.kanlon.model.AppQuartz
      **/
     public AppQuartz selectAppQuartzByIdSer(Long quartzId) {
         AppQuartz appQuartz = cronMapper.selectTaskById(quartzId);
-        if(appQuartz==null){
+        if (appQuartz == null) {
             throw new QuartzException("找不到该id的任务");
         }
         return appQuartz;
@@ -70,45 +75,47 @@ public class AppQuartzService {
 
     /**
      * 删除任务
+     *
      * @param quartzId 任务id
      **/
     @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = {Exception.class})
     public void deleteAppQuartzByIdSer(Long quartzId) throws SchedulerException {
-        AppQuartz appQuartz  = this.selectAppQuartzByIdSer(quartzId);
-        jobUtil.deleteJob(appQuartz.getJobName(),appQuartz.getJobGroup());
+        AppQuartz appQuartz = this.selectAppQuartzByIdSer(quartzId);
+        jobUtil.deleteJob(appQuartz.getJobName(), appQuartz.getJobGroup());
         cronMapper.deleteAppQuartzByIdSer(quartzId);
     }
 
     /**
      * 更新任务
+     *
      * @param newAppQuartz 根据任务实体类信息
      **/
     @Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = {Exception.class})
     public void updateAppQuartzSer(AppQuartz newAppQuartz) throws SchedulerException, ParseException {
         AppQuartz oldAppQuartz = this.selectAppQuartzByIdSer(newAppQuartz.getQuartzId());
-        if(oldAppQuartz==null){
+        if (oldAppQuartz == null) {
             throw new QuartzException("该任务id不存在，不能执行更新操作");
         }
         //根据新的任务信息更新旧的任务信息
-        if(newAppQuartz.getCronExpression()!=null){
+        if (newAppQuartz.getCronExpression() != null) {
             oldAppQuartz.setCronExpression(newAppQuartz.getCronExpression());
         }
-        if(newAppQuartz.getStartTime()!=null){
+        if (newAppQuartz.getStartTime() != null) {
             oldAppQuartz.setStartTime(newAppQuartz.getStartTime());
         }
-        if(newAppQuartz.getChargeDepartment()!=null){
+        if (newAppQuartz.getChargeDepartment() != null) {
             oldAppQuartz.setChargeDepartment(newAppQuartz.getChargeDepartment());
         }
-        if(newAppQuartz.getCharge()!=null){
+        if (newAppQuartz.getCharge() != null) {
             oldAppQuartz.setCharge(newAppQuartz.getCharge());
         }
-        if(newAppQuartz.getInvokeParam()!=null){
+        if (newAppQuartz.getInvokeParam() != null) {
             oldAppQuartz.setInvokeParam(newAppQuartz.getInvokeParam());
         }
-        if(newAppQuartz.getInvokeParam2()!=null){
+        if (newAppQuartz.getInvokeParam2() != null) {
             oldAppQuartz.setInvokeParam2(newAppQuartz.getInvokeParam2());
         }
-        if(newAppQuartz.getDescription()!=null){
+        if (newAppQuartz.getDescription() != null) {
             oldAppQuartz.setDescription(newAppQuartz.getDescription());
         }
         oldAppQuartz.setMtime(new Date());

@@ -1,4 +1,5 @@
 package com.kanlon.model;
+
 /***
  * 分页数据返回
  * @author zhangcanlong

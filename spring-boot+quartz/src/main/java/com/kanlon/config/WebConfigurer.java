@@ -6,8 +6,10 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Date;
+
 /**
  * spring mvc过滤器和日期格式配置
+ *
  * @author zhangcanlong
  * @since 2019-04-16
  **/

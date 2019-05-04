@@ -1,0 +1,7 @@
+server:
+  port: 9001
+eureka:
+  instance:
+    hostname: grpc-eureka-2
+  server:
+    enable-self-preservation: false

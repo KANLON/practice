@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "com.kanlon.proto";
+
+service Greeter {
+    rpc callMethod ( ParamRequest) returns (  CommonResponseReply) {}
+
+}
+message ParamRequest {
+    // 发送的参数1
+    string param1 = 1;
+    // 发送的参数2
+    string param2 = 2;
+    // 调度方法的类型，是调度shell，还是http，还是email
+    string type = 3;
+}
+message CommonResponseReply {
+    //是否成功，0不成功，1成功
+    int32 code = 1;
+    // 失败时的消息信息
+    string message = 2;
+    // 成功时返回的数据，可以为null
+    repeated  string data = 3;
+}
+
+

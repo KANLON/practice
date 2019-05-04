@@ -3,11 +3,11 @@ package com.kanlon.service;
 import com.kanlon.common.Constant;
 import com.kanlon.exception.QuartzException;
 import com.kanlon.job.EmailJob;
+import com.kanlon.job.HttpJob;
+import com.kanlon.job.ShellJob;
 import com.kanlon.model.AppQuartz;
 import com.kanlon.model.CommonResponse;
 import com.kanlon.model.ScheduleJob;
-import com.kanlon.job.HttpJob;
-import com.kanlon.job.ShellJob;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
@@ -44,31 +44,23 @@ public class JobUtil {
         JobDetail jobDetail = null;
         //构建job信息
         if (Constant.HTTP_STR.equals(appQuartz.getJobGroup())) {
-            jobDetail = JobBuilder.newJob(HttpJob.class)
-                    .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
-                    .build();
+            jobDetail = JobBuilder.newJob(HttpJob.class).withIdentity(appQuartz.getJobName(),
+                    appQuartz.getJobGroup()).build();
         }
         if (Constant.SHELL_STR.equals(appQuartz.getJobGroup())) {
-            jobDetail = JobBuilder.newJob(ShellJob.class)
-                    .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
-                    .withDescription(appQuartz.getDescription())
-                    .build();
+            jobDetail = JobBuilder.newJob(ShellJob.class).withIdentity(appQuartz.getJobName(),
+                    appQuartz.getJobGroup()).withDescription(appQuartz.getDescription()).build();
         }
-        if(Constant.EMAIL_STR.equals(appQuartz.getJobGroup())){
-            jobDetail = JobBuilder.newJob(EmailJob.class)
-                    .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
-                    .withDescription(appQuartz.getDescription())
-                    .build();
+        if (Constant.EMAIL_STR.equals(appQuartz.getJobGroup())) {
+            jobDetail = JobBuilder.newJob(EmailJob.class).withIdentity(appQuartz.getJobName(),
+                    appQuartz.getJobGroup()).withDescription(appQuartz.getDescription()).build();
         }
         //表达式调度构建器(即任务执行的时间,不立即执行)
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+        CronScheduleBuilder scheduleBuilder =
+                CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
         //构建trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity(appQuartz.getJobName(), appQuartz.getJobGroup())
-                .startAt(appQuartz.getStartTime())
-                .withSchedule(scheduleBuilder)
-                .withDescription(appQuartz.getDescription())
-                .build();
+        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(appQuartz.getJobName(),
+                appQuartz.getJobGroup()).startAt(appQuartz.getStartTime()).withSchedule(scheduleBuilder).withDescription(appQuartz.getDescription()).build();
         //传递参数
         trigger.getJobDataMap().put(Constant.INVOKE_PARAM_STR, appQuartz.getInvokeParam());
         trigger.getJobDataMap().put(Constant.INVOKE_PARAM2_STR, appQuartz.getInvokeParam2());
@@ -80,6 +72,7 @@ public class JobUtil {
 
     /**
      * 修改任务
+     *
      * @param appQuartz 任务信息
      **/
     public void modifyJob(AppQuartz appQuartz) throws SchedulerException, ParseException {
@@ -94,13 +87,11 @@ public class JobUtil {
         }
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
         //表达式调度构建器,不立即执行
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
+        CronScheduleBuilder scheduleBuilder =
+                CronScheduleBuilder.cronSchedule(appQuartz.getCronExpression()).withMisfireHandlingInstructionDoNothing();
         //按新的cronExpression表达式重新构建trigger
-        trigger = trigger.getTriggerBuilder()
-                .startAt(appQuartz.getStartTime())
-                .withIdentity(triggerKey)
-                .withDescription(appQuartz.getDescription())
-                .withSchedule(scheduleBuilder).build();
+        trigger =
+                trigger.getTriggerBuilder().startAt(appQuartz.getStartTime()).withIdentity(triggerKey).withDescription(appQuartz.getDescription()).withSchedule(scheduleBuilder).build();
         //修改参数
         trigger.getJobDataMap().put(Constant.QUARTZ_ID_STR, appQuartz.getQuartzId());
         trigger.getJobDataMap().put(Constant.INVOKE_PARAM_STR, appQuartz.getInvokeParam());
@@ -112,26 +103,28 @@ public class JobUtil {
 
     /**
      * 删除某个任务
-     * @param jobName 任务名称
+     *
+     * @param jobName   任务名称
      * @param groupName 组名称
      **/
-    public void deleteJob(String jobName,String groupName) throws SchedulerException {
+    public void deleteJob(String jobName, String groupName) throws SchedulerException {
         JobKey jobKey = new JobKey(jobName, groupName);
         if (!scheduler.checkExists(jobKey)) {
-            throw new QuartzException( "该任务不存在，不能删除");
+            throw new QuartzException("该任务不存在，不能删除");
         }
         scheduler.deleteJob(jobKey);
     }
 
     /**
      * 暂停某个任务
-     * @param jobName 任务名
+     *
+     * @param jobName  任务名
      * @param jobGroup 任务组名
      * @return
      **/
     public void pauseJob(String jobName, String jobGroup) throws SchedulerException {
         JobKey jobKey = new JobKey(jobName, jobGroup);
-        if(!scheduler.checkExists(jobKey)){
+        if (!scheduler.checkExists(jobKey)) {
             throw new QuartzException("该任务不存在，不能暂停");
         }
         scheduler.pauseJob(jobKey);
@@ -139,12 +132,13 @@ public class JobUtil {
 
     /**
      * 恢复某个任务
-     * @param jobName 任务名
+     *
+     * @param jobName  任务名
      * @param jobGroup 任务组名
      **/
     public void resumeJob(String jobName, String jobGroup) throws SchedulerException {
         JobKey jobKey = new JobKey(jobName, jobGroup);
-        if(!scheduler.checkExists(jobKey)){
+        if (!scheduler.checkExists(jobKey)) {
             throw new QuartzException("该任务不存在，不能恢复");
         }
         scheduler.resumeJob(jobKey);
@@ -167,7 +161,7 @@ public class JobUtil {
     /**
      * 获取Job状态
      *
-     * @param jobName 任务名
+     * @param jobName  任务名
      * @param jobGroup 任务组名
      * @return 状态信息
      * @throws SchedulerException
@@ -179,6 +173,7 @@ public class JobUtil {
 
     /**
      * 过期的获取全部任务
+     *
      * @return com.kanlon.model.CommonResponse
      **/
     @Deprecated

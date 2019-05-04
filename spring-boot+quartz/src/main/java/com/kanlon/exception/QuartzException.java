@@ -9,7 +9,9 @@ package com.kanlon.exception;
 public class QuartzException extends RuntimeException {
 
 
-    public QuartzException(String message){
+    private static final long serialVersionUID = 1356439445687837319L;
+
+    public QuartzException(String message) {
         super(message);
     }
 }

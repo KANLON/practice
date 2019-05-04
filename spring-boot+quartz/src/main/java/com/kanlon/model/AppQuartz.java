@@ -7,37 +7,62 @@ import java.util.Date;
 
 /**
  * tb_app_quartz表的实体类
+ *
  * @author zhangcanlong
  * @since 2019-04-09
  **/
 public class AppQuartz {
-    /**任务主键*/
+    /**
+     * 任务主键
+     */
     private Long quartzId;
-    /**任务名称*/
+    /**
+     * 任务名称
+     */
     private String jobName;
-    /**任务组名*/
+    /**
+     * 任务组名
+     */
     private String jobGroup;
-    /**负责人名称*/
+    /**
+     * 负责人名称
+     */
     private String charge;
-    /**负责人部门*/
+    /**
+     * 负责人部门
+     */
     @JsonProperty("chargeDepartment")
     private String chargeDepartment;
-    /**任务开始时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 任务开始时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
-    /**corn表达式*/
+    /**
+     * corn表达式
+     */
     private String cronExpression;
-    /**需要传递的参数*/
+    /**
+     * 需要传递的参数
+     */
     private String invokeParam;
-    /**需要传递的参数2，目前参数2只用于邮件发送时指定发送标题和正文内容，并以#分割*/
+    /**
+     * 需要传递的参数2，目前参数2只用于邮件发送时指定发送标题和正文内容，并以#分割
+     */
     private String invokeParam2;
-    /**描述*/
+    /**
+     * 描述
+     */
     private String description;
-    /**创建时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date ctime;
-    /**修改时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 修改时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date mtime;
 
     public Long getQuartzId() {

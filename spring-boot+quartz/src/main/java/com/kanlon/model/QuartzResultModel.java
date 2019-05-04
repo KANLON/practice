@@ -11,26 +11,44 @@ import java.util.Date;
  * @since 2019/4/15 20:56
  **/
 public class QuartzResultModel {
-    /**任务id*/
+    /**
+     * 任务id
+     */
     private Long quartzId;
-    /**调度日期日期*/
+    /**
+     * 调度日期日期
+     */
     private String dt;
-    /**调度开始时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 调度开始时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
-    /**调度结果*/
+    /**
+     * 调度结果
+     */
     private Integer scheduleResult;
-    /**调度任务执行结果*/
+    /**
+     * 调度任务执行结果
+     */
     private Integer execResult;
-    /**执行时间,毫秒值*/
+    /**
+     * 执行时间,毫秒值
+     */
     private Long execTime;
-    /**调度/任务执行完成时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 调度/任务执行完成时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date completeTime;
-    /**备注*/
+    /**
+     * 备注
+     */
     private String remark;
-    /**创建时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date ctime;
 
     public Long getQuartzId() {

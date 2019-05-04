@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_package = "com.linshen.grpc.cloud.lib";
+
+service Greeter {
+    rpc SayHello ( HelloRequest) returns (  HelloReply) {}
+
+}
+message HelloRequest {
+    string param1 = 1;
+    string param2 = 2;
+}
+message HelloReply {
+    //是否成功，0不成功，1成功
+    int32 code = 1;
+    // 失败时的消息信息
+    string message = 2;
+    // 成功时返回的数据，可以为null
+    repeated  string data = 3;
+}
+
+

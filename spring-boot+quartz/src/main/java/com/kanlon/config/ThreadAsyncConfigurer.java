@@ -10,11 +10,12 @@ import java.util.concurrent.Executor;
 
 /**
  * 线程池配置
+ *
  * @author zhangcanlong
  * @since 2019-04-10
  **/
 @Component
-public class ThreadAsyncConfigurer  implements AsyncConfigurer {
+public class ThreadAsyncConfigurer implements AsyncConfigurer {
     @Bean
     @Override
     public Executor getAsyncExecutor() {
@@ -35,10 +36,10 @@ public class ThreadAsyncConfigurer  implements AsyncConfigurer {
         threadPool.initialize();
         return threadPool;
     }
- 
+
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return null;
     }
- 
+
 }

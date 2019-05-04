@@ -13,33 +13,59 @@ import java.util.Date;
  * @since 2019/4/15 12:46
  **/
 public class QuartzInfo {
-    /**任务主键*/
+    /**
+     * 任务主键
+     */
     private Integer quartzId;
-    /**任务名称*/
+    /**
+     * 任务名称
+     */
     private String jobName;
-    /**任务分组*/
+    /**
+     * 任务分组
+     */
     private String jobGroup;
-    /**任务负责人*/
+    /**
+     * 任务负责人
+     */
     private String charge;
-    /**任务负责人部门*/
+    /**
+     * 任务负责人部门
+     */
     private String chargeDepartment;
-    /**任务开始时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 任务开始时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
-    /**corn表达式*/
+    /**
+     * corn表达式
+     */
     private String cronExpression;
-    /**需要传递的参数*/
+    /**
+     * 需要传递的参数
+     */
     private String invokeParam;
-    /**需要传递的参数2*/
+    /**
+     * 需要传递的参数2
+     */
     private String invokeParam2;
-    /**修改时间*/
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    /**
+     * 修改时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date mtime;
-    /**描述*/
+    /**
+     * 描述
+     */
     private String description;
-    /**下次执行时间,获取时，将long型时间转化为“yyyy-MM-dd HH:mm:ss”这种形式的字符串*/
+    /**
+     * 下次执行时间,获取时，将long型时间转化为“yyyy-MM-dd HH:mm:ss”这种形式的字符串
+     */
     private String nextFireTime;
-    /**任务状态*/
+    /**
+     * 任务状态
+     */
     private String triggerState;
 
     public Integer getQuartzId() {
