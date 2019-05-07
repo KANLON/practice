@@ -7,12 +7,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -74,19 +72,15 @@ public class LogService {
         requests[2].setDt(getDateStr(request.getDt(),4));
         requests[3].setDt(getDateStr(request.getDt(),6));
         //异步执行
-        LogPO[] logPOS = new LogPO[4];
         List<LogPO> list = new ArrayList<>(4);
-        logPOS[0] = this.execMapper(request,latch);
-        logPOS[1] = this.execMapper(requests[1],latch);
-        logPOS[2] = this.execMapper(requests[2],latch);
-        logPOS[3] = this.execMapper(requests[3],latch);
+        // 设置为线程安全
+        Collections.synchronizedCollection(list);
+        list.addAll(this.execMapper(requests[0], latch));
+        list.addAll(this.execMapper(requests[1], latch));
+        list.addAll(this.execMapper(requests[2], latch));
+        list.addAll(this.execMapper(requests[3], latch));
         //等待5秒还没执行完，直接返回
         latch.await(5, TimeUnit.SECONDS);
-        for(LogPO logPO:logPOS){
-            if(logPO!=null){
-                list.add(logPO);
-            }
-        }
         return list;
     }
 
@@ -107,10 +101,10 @@ public class LogService {
      * @return 执行返回的实体类
      **/
     @Async
-    protected LogPO execMapper(LogRequest request, CountDownLatch latch){
-        LogPO logPO = this.logMapper.getLogsByCondition4(request);
+    protected List<LogPO> execMapper(LogRequest request, CountDownLatch latch) {
+        List<LogPO> logPOs = this.logMapper.getLogsByCondition4(request);
         latch.countDown();
-        return logPO;
+        return logPOs;
     }
 
     /**

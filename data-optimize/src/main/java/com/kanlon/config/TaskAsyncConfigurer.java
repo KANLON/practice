@@ -23,7 +23,7 @@ public class TaskAsyncConfigurer implements AsyncConfigurer {
         ThreadPoolTaskExecutor threadPool = new ThreadPoolTaskExecutor();
         threadPool.setCorePoolSize(10);
         threadPool.setMaxPoolSize(100);
-        threadPool.setQueueCapacity(10);
+        threadPool.setQueueCapacity(2000);
         threadPool.setWaitForTasksToCompleteOnShutdown(true);
         //设置线程等待结束时间，默认为0
         threadPool.setAwaitTerminationSeconds(60);
