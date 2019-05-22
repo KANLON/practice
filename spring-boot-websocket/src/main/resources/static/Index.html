@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title></title>
 </head>
 <body>
-<input id="text" type="text" />
+<input id="text" type="text"/>
 <button onclick="send()">Send</button>
 <button onclick="closeWebSocket()">Close</button>
 <div id="message">
@@ -13,20 +13,20 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
 
-    var userID="888";
-    var websocket=null;
+    var userID = "888";
+    var websocket = null;
 
-    $(function(){
+    $(function () {
         connectWebSocket();
     })
 
     //建立WebSocket连接
-    function connectWebSocket(){
+    function connectWebSocket() {
 
         console.log("开始...");
 
         //建立webSocket连接
-        websocket = new WebSocket("ws://127.0.0.1:8080/myHandler/ID="+userID);
+        websocket = new WebSocket("ws://127.0.0.1:8080/myHandler/username=" + userID);
 
         //打开webSokcet连接时，回调该函数
         websocket.onopen = function () {
@@ -45,16 +45,18 @@
         }
 
     }
+
     //发送消息
-    function send(){
-        var postValue={};
-        postValue.id=userID;
-        postValue.message=$("#text").val();
+    function send() {
+        var postValue = {};
+        postValue.id = userID;
+        postValue.message = $("#text").val();
         websocket.send(JSON.stringify(postValue));
     }
+
     //关闭连接
-    function closeWebSocket(){
-        if(websocket != null) {
+    function closeWebSocket() {
+        if (websocket != null) {
             websocket.close();
         }
     }
