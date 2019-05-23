@@ -1,6 +1,6 @@
 package com.kanlon.controller;
 
-import com.kanlon.handler.MyHandler;
+import com.kanlon.handler.MyWebSocketHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +19,19 @@ import org.springframework.web.socket.TextMessage;
 public class SendMessageController {
 
     @Autowired
-    private MyHandler myHandler;
+    private MyWebSocketHandle myWebSocketHandle;
 
+    /**
+     * 发送消息给某个websocket客户端
+     *
+     * @param username 标记websocket登录的用户名
+     * @param message  回调的消息
+     * @return java.lang.String 返回给websocket的信息
+     **/
     @GetMapping("/hello")
-    public String sendMessage(@RequestParam("username") String username) {
-        myHandler.sendMessageToUser(username, new TextMessage("服务器返回的消息"));
-
-        return username;
+    public String sendMessage(@RequestParam("username") String username, @RequestParam("message") String message) {
+        String returnMessage = "服务器返回的消息" + username + message;
+        myWebSocketHandle.sendMessageToUser(username, new TextMessage(returnMessage));
+        return returnMessage;
     }
 }

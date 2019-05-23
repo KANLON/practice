@@ -12,8 +12,8 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
-
-    var userID = "888";
+    // 建立websocket链接的唯一标识，通过该用户名，并且在多个窗口打开该页面可以建立多个websocket链接
+    var username = "zhangcanlong";
     var websocket = null;
 
     $(function () {
@@ -26,7 +26,7 @@
         console.log("开始...");
 
         //建立webSocket连接
-        websocket = new WebSocket("ws://127.0.0.1:8080/myHandler/username=" + userID);
+        websocket = new WebSocket("ws://127.0.0.1:8080/myHandler/username=" + username);
 
         //打开webSokcet连接时，回调该函数
         websocket.onopen = function () {
