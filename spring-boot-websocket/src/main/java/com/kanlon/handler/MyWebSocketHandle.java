@@ -24,7 +24,7 @@ public class MyWebSocketHandle implements WebSocketHandler {
     /**
      * 存放在线用户列表
      **/
-    private final Map<String, WebSocketSession> userMap = new ConcurrentHashMap<>();
+    private static final Map<String, WebSocketSession> USER_MAP = new ConcurrentHashMap<>();
 
     /**
      * 建立链接后的操作
@@ -36,11 +36,11 @@ public class MyWebSocketHandle implements WebSocketHandler {
         log.info("成功建立连接");
         String username = session.getUri().toString().split("username=")[1];
         if (username != null) {
-            userMap.put(username, session);
+            USER_MAP.put(username, session);
             session.sendMessage(new TextMessage("成功建立socket连接"));
             log.info(session.toString());
         }
-        log.info("当前机器在线人数：" + userMap.size());
+        log.info("当前机器在线人数：" + USER_MAP.size());
     }
 
     /**
@@ -68,7 +68,7 @@ public class MyWebSocketHandle implements WebSocketHandler {
             session.close();
         }
         log.error("socket连接出错," + throwable.getMessage());
-        userMap.remove(getClientId(session));
+        USER_MAP.remove(getClientId(session));
     }
 
     /**
@@ -80,7 +80,7 @@ public class MyWebSocketHandle implements WebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         log.info(session.getId() + ",连接已关闭：" + status);
-        userMap.remove(getClientId(session));
+        USER_MAP.remove(getClientId(session));
     }
 
     @Override
@@ -96,11 +96,11 @@ public class MyWebSocketHandle implements WebSocketHandler {
      * @return 是否发送成功
      */
     public boolean sendMessageToUser(String username, TextMessage message) {
-        if (userMap.get(username) == null) {
+        if (USER_MAP.get(username) == null) {
             log.warn("用户：" + username + "不存在，不能发送给该用户");
             return false;
         }
-        WebSocketSession session = userMap.get(username);
+        WebSocketSession session = USER_MAP.get(username);
         log.info("sendMessage:" + session);
         if (!session.isOpen()) {
             return false;
@@ -123,11 +123,11 @@ public class MyWebSocketHandle implements WebSocketHandler {
      */
     public boolean sendMessageToAllUsers(TextMessage message) {
         boolean allSendSuccess = true;
-        Set<String> clientIds = userMap.keySet();
+        Set<String> clientIds = USER_MAP.keySet();
         WebSocketSession session;
         for (String clientId : clientIds) {
             try {
-                session = userMap.get(clientId);
+                session = USER_MAP.get(clientId);
                 if (session.isOpen()) {
                     session.sendMessage(message);
                 }

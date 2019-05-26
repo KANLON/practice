@@ -31,7 +31,7 @@ public class SendMessageController {
     @GetMapping("/hello")
     public String sendMessage(@RequestParam("username") String username, @RequestParam("message") String message) {
         String returnMessage = "服务器返回的消息" + username + message;
-        myWebSocketHandle.sendMessageToUser(username, new TextMessage(returnMessage));
-        return returnMessage;
+        boolean b = myWebSocketHandle.sendMessageToUser(username, new TextMessage(returnMessage));
+        return b ? returnMessage : "该websocket用户不存在";
     }
 }
