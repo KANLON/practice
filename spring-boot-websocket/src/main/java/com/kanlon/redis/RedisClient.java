@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class RedisClient {
 
     @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 保存值到缓存里面
@@ -24,7 +24,7 @@ public class RedisClient {
      * @param value 要保存的对象
      * @return 返回是否保存成功
      */
-    public boolean setkeyValue(Object key, Object value) {
+    public boolean setkeyValue(String key, Object value) {
         try {
             redisTemplate.opsForValue().set(key, value);
             return true;
@@ -40,7 +40,7 @@ public class RedisClient {
      * @param key 要获取的key值
      * @return 返回的对象
      */
-    public Object getValue(Object key) {
+    public Object getValue(String key) {
         return redisTemplate.opsForValue().get(key);
     }
 }
