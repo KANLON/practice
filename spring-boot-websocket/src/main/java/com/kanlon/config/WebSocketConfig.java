@@ -1,6 +1,6 @@
 package com.kanlon.config;
 
-import com.kanlon.handler.MyWebSocketHandle;
+import com.kanlon.service.WebSocketHandleService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -18,7 +18,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new MyWebSocketHandle(), "myHandler/{username}").setAllowedOrigins("*");
+        registry.addHandler(new WebSocketHandleService(), "myHandler/{username}").setAllowedOrigins("*");
     }
 
 

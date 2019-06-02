@@ -1,8 +1,6 @@
 package com.kanlon.service;
 
-import com.kanlon.handler.MyWebSocketHandle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 
@@ -16,11 +14,11 @@ import org.springframework.web.socket.TextMessage;
 public class SentMessageService {
 
     @Autowired
-    private MyWebSocketHandle myWebSocketHandle;
+    private WebSocketHandleService webSocketHandleService;
 
-    @Scheduled(fixedRate = 5000)
+    //    @Scheduled(fixedRate = 5000)
     public void sendMessage() {
-        Boolean b = myWebSocketHandle.sendMessageToUser("zhangcanlong", new TextMessage("服务器主动推送一条消息ccc"));
+        Boolean b = webSocketHandleService.sendMessageToUser("zhangcanlong", new TextMessage("服务器主动推送一条消息ccc"));
         System.out.println(b);
     }
 }

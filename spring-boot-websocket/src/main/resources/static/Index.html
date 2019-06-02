@@ -49,7 +49,7 @@
     //发送消息
     function send() {
         var postValue = {};
-        postValue.id = userID;
+        postValue.id = username;
         postValue.message = $("#text").val();
         websocket.send(JSON.stringify(postValue));
     }

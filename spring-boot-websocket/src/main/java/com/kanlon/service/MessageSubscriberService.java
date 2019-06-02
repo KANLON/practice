@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
  * @since 2019-06-02
  **/
 @Service
-public class MessageSubscriber {
+public class MessageSubscriberService {
 
-    private final Logger logger = LoggerFactory.getLogger(MessageSubscriber.class);
+    private final Logger logger = LoggerFactory.getLogger(MessageSubscriberService.class);
 
     /**
      * 处理订阅的消息

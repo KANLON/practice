@@ -1,6 +1,6 @@
 package com.kanlon.config;
 
-import com.kanlon.service.MessageSubscriber;
+import com.kanlon.service.MessageSubscriberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -39,7 +39,7 @@ public class RedisPubSubConfig {
      * @return
      */
     @Bean
-    public MessageListenerAdapter listener(MessageSubscriber subscriber,
+    public MessageListenerAdapter listener(MessageSubscriberService subscriber,
             Jackson2JsonRedisSerializer jackson2JsonRedisSerializer) {
 
         MessageListenerAdapter adapter = new MessageListenerAdapter(subscriber, "onMessage");

@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * redis 订阅推送
+ * redis 消息 订阅推送
  *
  * @author zhangcanlong
  * @since 2019-06-02
  */
 @Service
-public class RedisPubSub {
-    private static final Logger logger = LoggerFactory.getLogger(RedisPubSub.class);
+public class MessagePubSubService {
+    private static final Logger logger = LoggerFactory.getLogger(MessagePubSubService.class);
 
     @Autowired
     @Qualifier("redisTemplate")
@@ -50,7 +50,6 @@ public class RedisPubSub {
         pushMsg.setContent(content);
         pushMsg.setCreateTime(new Date());
         pushMsg.setPublisher(publisher);
-
         redisTemplate.convertAndSend(topic.getTopic(), pushMsg);
     }
 
