@@ -29,7 +29,7 @@ public class WebSocketHandleService implements WebSocketHandler {
     /**
      * 存放在线用户列表
      **/
-    private static final Map<String, WebSocketSession> USER_MAP = new ConcurrentHashMap<>();
+    public static final Map<String, WebSocketSession> USER_MAP = new ConcurrentHashMap<>();
 
     /**
      * 建立链接后的操作

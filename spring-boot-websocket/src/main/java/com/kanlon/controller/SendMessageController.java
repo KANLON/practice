@@ -1,6 +1,5 @@
 package com.kanlon.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kanlon.response.CommonResponse;
 import com.kanlon.service.MessagePubSubService;
@@ -54,18 +53,7 @@ public class SendMessageController {
     public CommonResponse puhSubMessage(@RequestParam("username") String username,
             @RequestParam("message") String message) {
         messagePubSubService.publish(username, message);
-        boolean flag;
-        try {
-            flag = webSocketHandleService.sendMessageToUser(username,
-                    new TextMessage(MAPPER.writeValueAsString(CommonResponse.succeedResult(message))));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new RuntimeException("json格式对象出错!", e);
-        }
-        if (flag) {
-            return CommonResponse.succeedResult("发送给webSocket成功，发布的消息为：" + username + ":" + message);
-        }
-        return CommonResponse.failedResult("发送给webSocket失败，发布的消息为：" + username + ":" + message);
+        return CommonResponse.failedResult("发布到redis的消息为：" + username + ":" + message);
     }
 
 }
