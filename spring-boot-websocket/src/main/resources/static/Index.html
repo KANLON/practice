@@ -26,7 +26,7 @@
         console.log("开始...");
 
         //建立webSocket连接
-        websocket = new WebSocket("ws://127.0.0.1:8080/myHandler/username=" + username);
+        websocket = new WebSocket("ws://127.0.0.1:8081/api/websocket?username=" + username);
 
         //打开webSokcet连接时，回调该函数
         websocket.onopen = function () {

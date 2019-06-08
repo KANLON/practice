@@ -23,7 +23,7 @@ public class RedisTest {
     private RedisTemplate<Object, Object> redisTemplate;
 
     @Test
-    public void saveReids() {
+    public void saveRedis() {
         User u = new User();
         u.setName("张三三");
         u.setId("1");

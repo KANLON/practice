@@ -39,7 +39,7 @@ public class WebSocketHandleService implements WebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         log.info("成功建立连接");
-        String username = session.getUri().toString().split("username=")[1];
+        String username = getClientId(session);
         if (username != null) {
             USER_MAP.put(username, session);
             session.sendMessage(new TextMessage(MAPPER.writeValueAsBytes(CommonResponse.succeedResult())));
@@ -159,8 +159,10 @@ public class WebSocketHandleService implements WebSocketHandler {
      * @return
      */
     private String getClientId(WebSocketSession session) {
-        String username = session.getUri().toString().split("username=")[1];
-        return username;
+        if (session.getUri() == null) {
+            throw new RuntimeException("url链接为null，错误！");
+        }
+        return session.getUri().toString().split("\\?username=")[1];
     }
 
 }

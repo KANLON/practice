@@ -53,7 +53,7 @@ public class SendMessageController {
     public CommonResponse puhSubMessage(@RequestParam("username") String username,
             @RequestParam("message") String message) {
         messagePubSubService.publish(username, message);
-        return CommonResponse.failedResult("发布到redis的消息为：" + username + ":" + message);
+        return CommonResponse.succeedResult("发布到redis的消息为：" + username + ":" + message);
     }
 
 }
