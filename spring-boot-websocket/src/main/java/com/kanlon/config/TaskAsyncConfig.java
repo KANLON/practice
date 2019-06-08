@@ -19,7 +19,7 @@ import java.util.concurrent.Executor;
  **/
 @Configuration
 @EnableAsync
-public class TaskAsyncConfigurer implements AsyncConfigurer {
+public class TaskAsyncConfig implements AsyncConfigurer {
 
     @Bean
     public TaskScheduler scheduledExecutorService() {

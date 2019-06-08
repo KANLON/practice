@@ -21,7 +21,7 @@ public class MessagePubSubService {
     private static final Logger logger = LoggerFactory.getLogger(MessagePubSubService.class);
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
 
     private ChannelTopic topic = new ChannelTopic("/redis/pubsub");
 

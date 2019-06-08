@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class RedisClient {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
 
     /**
      * 保存值到缓存里面
