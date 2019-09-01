@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          username: admin
+          password: admin
+          url: jdbc:mysql://127.0.0.1:3306/dynamic_datasource?useUnicode=true&characterEncoding=utf-8&useSSL=false
+          driver-class-name: com.mysql.jdbc.Driver
+logging:
+  level:
+    com.kanlon: debug

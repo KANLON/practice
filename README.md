@@ -69,3 +69,6 @@
 
 ### 练习16 spring boot websocket的练习
 [spring-boot-websocket](/spring-boot-websocket)
+
+### 练习17 spring-boot-dynamic-datasource 动态数据源
+[spring-boot-dynamic-datasource](/spring-boot-dynamic-datasource)
