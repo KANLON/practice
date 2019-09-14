@@ -37,7 +37,6 @@ public class CodeGeneratorTest {
      */
     private boolean serviceClassNameStartWithI = true;
 
-    @Test
     public void generateCode() {
         String packageName = "com.kanlon";
         enableTableFieldAnnotation = false;

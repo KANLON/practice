@@ -1,12 +1,24 @@
 spring:
   datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        loginUsername: admin
+        loginPassword: 123456
     dynamic:
+      druid: #以下是全局默认值，可以全局更改
+        filters: stat,wall # 注意这个值和druid原生不一致，默认启动了stat,wall
       datasource:
         master:
           username: admin
           password: admin
           url: jdbc:mysql://127.0.0.1:3306/dynamic_datasource?useUnicode=true&characterEncoding=utf-8&useSSL=false
           driver-class-name: com.mysql.jdbc.Driver
+          druid: # 以下参数针对每个库可以重新设置druid参数
+            initial-size:
+            validation-query: select 1 #比如oracle就需要重新设置这个
 logging:
   level:
     com.kanlon: debug

@@ -24,17 +24,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * JDBC数据源提供者(抽象)
  *
- * @author TaoYu
- * @since 2.1.2
+ * @author zhangcanlong
+ * @since 2019-09-14
  */
 @Slf4j
 @Configuration
@@ -44,19 +42,20 @@ public  class MysqlDataSourceProvider extends AbstractDataSourceProvider impleme
   /**
    * JDBC driver
    */
-  private String driverClassName;
+  private String driverClassName = "com.mysql.jdbc.Driver";
   /**
    * JDBC url 地址
    */
-  private String url;
+  private String url = "jdbc:mysql://127.0.0.1:3306/dynamic_datasource?useUnicode=true&characterEncoding=utf-8&useSSL"
+          + "=false";
   /**
    * JDBC 用户名
    */
-  private String username;
+  private String username = "admin";
   /**
    * JDBC 密码
    */
-  private String password;
+  private String password = "admin";
 
 
   @Override
@@ -89,6 +88,31 @@ public  class MysqlDataSourceProvider extends AbstractDataSourceProvider impleme
    */
   protected  Map<String, DataSourceProperty> executeStmt(Statement statement)
           throws SQLException{
-    return  null;
+    Map<String, DataSourceProperty> returnMap = new LinkedHashMap<>(16);
+    String sql = " select id,name,host,port,db_username,db_password,database_name from d_db_info where is_deleted=0";
+    statement.execute(sql);
+    ResultSet resultSet = statement.getResultSet();
+    while (resultSet.next()) {
+      Long id = resultSet.getLong("id");
+      String host = resultSet.getString("host");
+      String port = resultSet.getString("port");
+      String dbName = resultSet.getString("name");
+      String dbUsername = resultSet.getString("db_username");
+      String dbPassword = resultSet.getString("db_password");
+      String dataBaseName = resultSet.getString("database_name");
+
+      DataSourceProperty dataSourceProperty = new DataSourceProperty();
+      dataSourceProperty.setPassword(dbPassword);
+      dataSourceProperty.setUsername(dbUsername);
+      dataSourceProperty.setUrl("jdbc:mysql://" + host + ":" + port + "/" + dataBaseName + "?useUnicode=true" +
+              "&characterEncoding=utf-8&useSSL=false");
+      dataSourceProperty.setDriverClassName("com.mysql.jdbc.Driver");
+      if (id == 1) {
+        returnMap.put("master", dataSourceProperty);
+      } else {
+        returnMap.put(String.valueOf(id), dataSourceProperty);
+      }
+    }
+    return returnMap;
   }
 }
