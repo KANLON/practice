@@ -72,3 +72,7 @@
 
 ### 练习17 spring-boot-dynamic-datasource 动态数据源
 [spring-boot-dynamic-datasource](/spring-boot-dynamic-datasource)
+
+
+### 练习18 spring-boot-rocketmq RocketMQ消息队列练习例子
+[spring-boot-rocketmq](/spring-boot-rocketmq)
