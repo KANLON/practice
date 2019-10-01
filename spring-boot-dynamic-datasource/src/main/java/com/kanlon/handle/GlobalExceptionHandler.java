@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 /**
@@ -27,13 +28,13 @@ public class GlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public CommonResponse customExceptionHandler(Exception e) {
+    public CommonResponse customExceptionHandler(Exception e, HttpServletResponse response) {
         e.printStackTrace();
         if (e instanceof MethodArgumentNotValidException || e instanceof BindException) {
             BindingResult bindingResult = e instanceof MethodArgumentNotValidException ?
                     ((MethodArgumentNotValidException) e).getBindingResult() : ((BindException) e).getBindingResult();
 
-            HashMap<String, String> messagesData = new HashMap<>();
+            HashMap<String, String> messagesData = new HashMap<>(16);
             for (FieldError error : bindingResult.getFieldErrors()) {
                 messagesData.put(error.getField(), error.getDefaultMessage());
             }
@@ -43,6 +44,7 @@ public class GlobalExceptionHandler {
             commonResponse.setMessageData(messagesData);
             return CommonResponse.failedResult(messagesData.toString(),-1000);
         }
-        return CommonResponse.succeedResult();
+        response.setStatus(501);
+        return CommonResponse.failedResult(e.getLocalizedMessage());
     }
 }

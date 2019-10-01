@@ -2,10 +2,6 @@ package com.kanlon.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -13,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -75,7 +73,7 @@ public class DDbInfo implements Serializable {
     private String databaseName;
 
     /**
-     * 数据库类型
+     * 数据库类型,目前只有一种，1为mysql
      */
     @NotNull
     private Integer dbType;
@@ -83,16 +81,19 @@ public class DDbInfo implements Serializable {
     /**
      * 创建者dw用户名
      */
+    @JsonIgnore
     private String username;
 
     /**
      * 创建时间
      */
+    @JsonIgnore
     private Date created =new Date();
 
     /**
      * 修改时间
      */
+    @JsonIgnore
     private Date updated = new Date();
 
     /**
