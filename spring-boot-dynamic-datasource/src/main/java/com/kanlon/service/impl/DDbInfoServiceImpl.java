@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kanlon.mapper.DDbInfoMapper;
 import com.kanlon.model.DDbInfo;
 import com.kanlon.service.IDDbInfoService;
+import com.kanlon.util.AesUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,8 @@ public class DDbInfoServiceImpl extends ServiceImpl<DDbInfoMapper, DDbInfo> impl
      **/
     private final Map<Long, DataSource> dataSourceMap = new ConcurrentHashMap<>(16);
 
+    @Value("${db.password-key}")
+    private String dbPasswordKey;
 
     /**
      * 管理数据源信息
@@ -41,13 +45,15 @@ public class DDbInfoServiceImpl extends ServiceImpl<DDbInfoMapper, DDbInfo> impl
      **/
     @Override
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.READ_COMMITTED)
-    public void addOrUpdateDataSource(DDbInfo dDbInfo) {
+    public void addOrUpdateDataSource(final DDbInfo dDbInfo) {
+        final String encryptPassword = AesUtil.aesPKCS5PaddingEncrypt(dDbInfo.getDbPassword(), this.dbPasswordKey);
+        dDbInfo.setDbPassword(encryptPassword);
         if (dDbInfo.getId() == null) {
             this.save(dDbInfo);
             this.createDataSource(dDbInfo);
         } else {
             // 先建新的数据源，如果新的能连接通，则删除旧的
-            DruidDataSource oldDataSource = (DruidDataSource) dataSourceMap.get(dDbInfo.getId());
+            final DruidDataSource oldDataSource = (DruidDataSource) this.dataSourceMap.get(dDbInfo.getId());
             this.createDataSource(dDbInfo);
             if (oldDataSource != null) {
                 oldDataSource.close();
@@ -66,29 +72,30 @@ public class DDbInfoServiceImpl extends ServiceImpl<DDbInfoMapper, DDbInfo> impl
      * @return 执行结果
      **/
     @Override
-    public List<Map<String, Object>> execSqlWithSelfDataSource(Long dbId, String sql) {
-        DDbInfo dbInfo = this.getById(dbId);
+    public List<Map<String, Object>> execSqlWithSelfDataSource(final Long dbId, final String sql) {
+        final DDbInfo dbInfo = this.getById(dbId);
         if (dbInfo == null) {
             throw new RuntimeException("数据库不存在！");
         }
-        DataSource dataSource = dataSourceMap.get(dbId);
+        DataSource dataSource = this.dataSourceMap.get(dbId);
         if (dataSource == null || ((DruidDataSource) dataSource).isClosed()) {
             dataSource = this.createDataSource(dbInfo);
         }
-        List<Map<String, Object>> resultData = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCnt = resultSet.getMetaData().getColumnCount();
+        final List<Map<String, Object>> resultData = new ArrayList<>();
+        try (final Connection connection = dataSource.getConnection(); final Statement statement =
+                connection.createStatement(); final ResultSet resultSet = statement.executeQuery(sql)) {
+            final ResultSetMetaData metaData = resultSet.getMetaData();
+            final int columnCnt = resultSet.getMetaData().getColumnCount();
             // 遍历resultSet，将数据放入到list集合中
             while (resultSet.next()) {
-                Map<String, Object> map = new LinkedHashMap<>(16);
+                final Map<String, Object> map = new LinkedHashMap<>(16);
                 for (int i = 1; i <= columnCnt; i++) {
                     map.put(metaData.getColumnLabel(i), resultSet.getObject(i));
                 }
                 resultData.add(map);
             }
-        } catch (SQLException e) {
-            log.error("执行sql错误", e);
+        } catch (final SQLException e) {
+            this.log.error("执行sql错误", e);
             throw new RuntimeException("执行sql错误！" + e.getMessage());
         }
         return resultData;
@@ -97,12 +104,13 @@ public class DDbInfoServiceImpl extends ServiceImpl<DDbInfoMapper, DDbInfo> impl
     /**
      * 根据数据库信息，创建数据源，如果数据源不存在的时候
      *
-     * @param dDbInfo 数据库信息
+     * @param dDbInfo 数据库信息,其中的密码都是加密了的
      **/
-    private DataSource createDataSource(DDbInfo dDbInfo) {
-        DruidDataSource dataSource = new DruidDataSource();
+    private DataSource createDataSource(final DDbInfo dDbInfo) {
+        final String originPassword = AesUtil.aesPKCS5PaddingDecrypt(dDbInfo.getDbPassword(), this.dbPasswordKey);
+        final DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUsername(dDbInfo.getDbUsername());
-        String url;
+        final String url;
         if (dDbInfo.getDbType() == 1) {
             url = "jdbc:mysql://" + dDbInfo.getHost() + ":" + dDbInfo.getPort() + "/" + dDbInfo.getDatabaseName() +
                     "?useUnicode=true&characterEncoding=utf-8";
@@ -111,7 +119,7 @@ public class DDbInfoServiceImpl extends ServiceImpl<DDbInfoMapper, DDbInfo> impl
                     "?useUnicode=true&characterEncoding=utf-8";
         }
         dataSource.setUrl(url);
-        dataSource.setPassword(dDbInfo.getDbPassword());
+        dataSource.setPassword(originPassword);
         dataSource.setInitialSize(1);
         dataSource.setMinIdle(2);
         dataSource.setTestWhileIdle(true);
@@ -126,12 +134,12 @@ public class DDbInfoServiceImpl extends ServiceImpl<DDbInfoMapper, DDbInfo> impl
         dataSource.setRemoveAbandonedTimeout(800);
         dataSource.setName(String.valueOf(dDbInfo.getId()));
         // 测试数据源是否连接得通
-        try (Connection connection = dataSource.getConnection()) {
-            log.debug("建立数据源连接");
-        } catch (SQLException e) {
+        try (final Connection connection = dataSource.getConnection()) {
+            this.log.debug("建立数据源连接");
+        } catch (final SQLException e) {
             throw new RuntimeException("连接数据源失败！" + e.getMessage());
         }
-        dataSourceMap.put(dDbInfo.getId(), dataSource);
+        this.dataSourceMap.put(dDbInfo.getId(), dataSource);
         return dataSource;
     }
 

@@ -22,3 +22,5 @@ spring:
 logging:
   level:
     com.kanlon: debug
+db:
+  password-key: 123456
