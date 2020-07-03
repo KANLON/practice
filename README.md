@@ -76,3 +76,7 @@
 
 ### 练习18 spring-boot-rocketmq RocketMQ消息队列练习例子
 [spring-boot-rocketmq](/spring-boot-rocketmq)
+
+
+### 练习19 spring-boot-thrift thrift rpc 调用的例子
+[spring-boot-thrift](/spring-boot-thrift)
