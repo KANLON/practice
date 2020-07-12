@@ -80,3 +80,8 @@
 
 ### 练习19 spring-boot-thrift thrift rpc 调用的例子
 [spring-boot-thrift](/spring-boot-thrift)
+
+
+### 练习20 Java 实现模拟退火算法 的例子
+[simulated-annealing](/simulated-annealing)
+
