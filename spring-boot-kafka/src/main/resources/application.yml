@@ -1,0 +1,10 @@
+spring:
+  kafka:
+    bootstrap-servers:
+      - kafkatest01.kanlon.com:9092
+      - kafkatest02.kanlon.com:9092
+    consumer:
+      group-id: dashboard_sys
+    # 这里的topic一定要存在，才能行
+    topic:
+      topic1: hiido_web_dashboard

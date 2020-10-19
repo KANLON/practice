@@ -85,3 +85,6 @@
 ### 练习20 Java 实现模拟退火算法 的例子
 [simulated-annealing](/simulated-annealing)
 
+### 练习21 Spring Boot kafka 调用
+[spring-boot-kafka](/spring-boot-kafka)
+
