@@ -19,3 +19,4 @@
 
 2. 启动之前需要，更换`application.yml` 中的kafka集群地址才能启动成功，和更改存在的topic信息才能正常发送或接受kafka消息
 
+3. 启动之后可以使用 这个运行这个curl命令 `curl --location --request GET 'localhost:8080/api/kafka/send?testMsg=1243'` 来测试kafka发送消息，日志中会有打印出发送和接受消息记录。
