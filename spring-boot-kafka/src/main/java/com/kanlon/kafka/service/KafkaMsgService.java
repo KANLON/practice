@@ -26,6 +26,7 @@ public class KafkaMsgService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+
     /**
      * 测试发送kafka消息
      */
