@@ -1,0 +1,12 @@
+spring:
+  kafka:
+    # kafka集群的地址
+    bootstrap-servers:
+      - kafkatest01.kanlon.com:8101
+      - kafkatest02.kanlon.com:8101
+    # kafka 消费者组的id，一般可以先随便填写
+    consumer:
+      group-id: dashboard_sys
+    # 这里的topic一定要存在，不然启动之后会一直报warning错误，也会发送不了消息到kafka或者从kafka中接受到消息
+    topic:
+      topic1: topic1_test
