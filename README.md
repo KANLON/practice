@@ -88,3 +88,6 @@
 ### 练习21 Spring Boot kafka 调用
 [spring-boot-kafka](/spring-boot-kafka)
 
+### 练习22 个人服务器的一些脚本
+[server-shell](/server-shell)
+
